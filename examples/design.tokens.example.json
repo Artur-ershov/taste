@@ -1,0 +1,194 @@
+{
+  "color": {
+    "background": {
+      "$type": "color",
+      "$value": "oklch(0.959 0.013 215)",
+      "$description": "Page background · #e8f4f7"
+    },
+    "surface": {
+      "$type": "color",
+      "$value": "oklch(0.971 0.011 215)",
+      "$description": "Card / panel surface · #eef7fa"
+    },
+    "surface-alt": {
+      "$type": "color",
+      "$value": "oklch(0.934 0.013 215)",
+      "$description": "Secondary surface · #e0ecef"
+    },
+    "text": {
+      "$type": "color",
+      "$value": "oklch(0.21 0.007 215)",
+      "$description": "Primary text · #15191a"
+    },
+    "text-muted": {
+      "$type": "color",
+      "$value": "oklch(0.46 0.008 215)",
+      "$description": "Secondary text · #53595b"
+    },
+    "border": {
+      "$type": "color",
+      "$value": "oklch(0.859 0.009 215)",
+      "$description": "Hairline / divider · #cad2d4"
+    },
+    "primary": {
+      "$type": "color",
+      "$value": "oklch(0.56 0.111 215)",
+      "$description": "Primary action · #00849d"
+    },
+    "primary-foreground": {
+      "$type": "color",
+      "$value": "oklch(0.99 0 215)",
+      "$description": "Text on primary · #fcfcfc"
+    },
+    "accent": {
+      "$type": "color",
+      "$value": "oklch(0.62 0.106 5)",
+      "$description": "Accent / highlight · #bb6a7d"
+    }
+  },
+  "spacing": {
+    "xs": {
+      "$type": "dimension",
+      "$value": {
+        "value": 7,
+        "unit": "px"
+      }
+    },
+    "sm": {
+      "$type": "dimension",
+      "$value": {
+        "value": 13,
+        "unit": "px"
+      }
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": {
+        "value": 23,
+        "unit": "px"
+      }
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": {
+        "value": 39,
+        "unit": "px"
+      }
+    },
+    "xl": {
+      "$type": "dimension",
+      "$value": {
+        "value": 65,
+        "unit": "px"
+      }
+    }
+  },
+  "radius": {
+    "sm": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": {
+        "value": 13,
+        "unit": "px"
+      }
+    }
+  },
+  "typography": {
+    "font-heading": {
+      "$type": "fontFamily",
+      "$value": "Georgia, \"Times New Roman\", \"Playfair Display\", serif"
+    },
+    "font-body": {
+      "$type": "fontFamily",
+      "$value": "\"Inter\", \"Helvetica Neue\", system-ui, sans-serif"
+    },
+    "size-caption": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "size-body": {
+      "$type": "dimension",
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      }
+    },
+    "size-h3": {
+      "$type": "dimension",
+      "$value": {
+        "value": 33,
+        "unit": "px"
+      }
+    },
+    "size-h2": {
+      "$type": "dimension",
+      "$value": {
+        "value": 43,
+        "unit": "px"
+      }
+    },
+    "size-h1": {
+      "$type": "dimension",
+      "$value": {
+        "value": 56,
+        "unit": "px"
+      }
+    },
+    "weight-heading": {
+      "$type": "fontWeight",
+      "$value": 600
+    },
+    "weight-body": {
+      "$type": "fontWeight",
+      "$value": 400
+    },
+    "letter-spacing-heading": {
+      "$type": "dimension",
+      "$value": {
+        "value": -0.021,
+        "unit": "rem"
+      }
+    },
+    "line-height-body": {
+      "$type": "number",
+      "$value": 1.6
+    }
+  },
+  "border": {
+    "width": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
+    }
+  },
+  "shadow": {
+    "sm": {
+      "$type": "shadow",
+      "$value": "0 3px 7px rgba(15,23,42,0.16)",
+      "$description": "CSS box-shadow"
+    },
+    "md": {
+      "$type": "shadow",
+      "$value": "0 11px 28px rgba(15,23,42,0.16)",
+      "$description": "CSS box-shadow"
+    }
+  }
+}
