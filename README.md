@@ -12,16 +12,32 @@ Neither emits a **per-person, generation-ready** profile. Taste does, and runs
 entirely in your browser — nothing is uploaded.
 
 ```
-intro ─▶ compare (2AFC × ~N) ─▶ flag styles to avoid ─▶ profile + export
+intro ─▶ judge designs ─▶ flag styles to avoid ─▶ profile + export
 ```
 
 ## Live
 
-- **v2** (current): https://artur-ershov.github.io/taste/v2/
-- **v1** (preserved for comparison): https://artur-ershov.github.io/taste/
+- **v3** (current): https://artur-ershov.github.io/taste/v3/
+- **v2**: https://artur-ershov.github.io/taste/v2/
+- **v1**: https://artur-ershov.github.io/taste/
 
-Both are published from this repo by one Actions workflow — v1 from a frozen
-snapshot in `frozen/v1/`, v2 from the current build.
+All three are published from this repo by one Actions workflow — v1 and v2 from
+frozen snapshots in `frozen/`, v3 from the current build.
+
+## What's new in v3 — fewer shows
+
+The goal of v3 is to reach a confident profile in far fewer screens.
+
+- **Best–worst grids** (best–worst scaling / MaxDiff): each screen shows four
+  designs and you pick the one you like *most* and *least*. That yields ~5
+  implied pairwise constraints per screen instead of 1 — roughly 5× the signal
+  per show — feeding the same Elo/Bradley-Terry/conjoint backend.
+- **Adaptive set selection** — each grid is under-sampled + maximally diverse in
+  axis space, so every screen is informative.
+- **Information-based adaptive stopping** — the conjoint model's weight standard
+  errors (from its information matrix, effect-size weighted) drive a live
+  confidence meter; the session ends as soon as the part-worths are settled
+  (typically ~12–16 screens, ~10× fewer than v2), with min/max bounds.
 
 ## What's new in v2
 
@@ -127,12 +143,14 @@ the three artifacts look like.
 
 ## Roadmap
 
-v2 shipped the conjoint part-worths and information-gain pairing. Remaining:
+v2 added the conjoint part-worths; v3 added best–worst elicitation and
+information-based stopping. Remaining:
 
 - **Controlled single-axis pairs** for the 3–4 axes that matter most, to break
   residual confounding entirely.
-- **Full active sampling** (Crowd-BT / ASAP) — v2 uses a model-uncertainty
-  heuristic; a posterior-variance objective would cut sessions further.
+- **Full D-optimal set selection** (ASAP-style) — v3 picks diverse, under-sampled
+  grids; choosing each grid to directly minimize posterior variance would cut
+  screens further still.
 - **Real screenshots** + a vision-model auto-tagger with human QA, alongside the
   rendered stimuli.
 

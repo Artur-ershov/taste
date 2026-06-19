@@ -343,6 +343,99 @@ code {
   min-width: 2px;
 }
 
+/* ---------- grid pick (v3) ---------- */
+.grid-pick__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.grid-pick__prompt {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.confidence {
+  width: 100%;
+  max-width: 520px;
+  height: 6px;
+  background: var(--panel-2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.confidence__bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #b9a6ff);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+.grid-pick__meta {
+  color: var(--faint);
+  font-size: 13px;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.tile {
+  position: relative;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: calc(var(--radius) + 4px);
+  padding: 6px;
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+.tile:hover:not(:disabled) {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+.tile--best {
+  border-color: #28c840;
+}
+.tile--locked {
+  cursor: default;
+  opacity: 0.85;
+}
+.tile__key {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+.tile:hover .tile__key {
+  opacity: 1;
+}
+.tile__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 99px;
+  color: #04130a;
+}
+.tile__badge--best {
+  background: #28c840;
+}
+.grid-pick__foot {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
 /* ---------- avoid ---------- */
 .avoid {
   max-width: 900px;
@@ -587,7 +680,8 @@ code {
 
 /* ---------- responsive ---------- */
 @media (max-width: 760px) {
-  .compare__grid {
+  .compare__grid,
+  .grid2 {
     grid-template-columns: 1fr;
   }
   .compare__vs {

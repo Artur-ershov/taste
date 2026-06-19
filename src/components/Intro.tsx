@@ -1,32 +1,27 @@
 import { useState } from "react";
-import { suggestedRounds } from "../lib/pairing";
 
 interface Props {
-  referenceCount: number;
-  onStart: (project: string, rounds: number) => void;
-  saved: { count: number; total: number } | null;
+  onStart: (project: string) => void;
+  saved: { screens: number } | null;
   onResume: () => void;
 }
 
-export function Intro({ referenceCount, onStart, saved, onResume }: Props) {
-  const suggested = suggestedRounds(referenceCount);
+export function Intro({ onStart, saved, onResume }: Props) {
   const [project, setProject] = useState("");
-  const [rounds, setRounds] = useState(suggested);
 
   return (
     <section className="intro">
       <h1 className="intro__title">Taste</h1>
       <p className="intro__lede">
-        A pairwise picker that turns your eye into a Claude-ready aesthetic profile. Compare design
-        references two at a time; we rank them with a conjoint logit model + Elo/Bradley-Terry and
-        export axis scores, W3C design tokens, a <code>SKILL.md</code> and a paste-ready Claude prompt.
+        A picker that turns your eye into a Claude-ready aesthetic profile. Each screen shows four
+        designs — pick the one you like <strong>most</strong> and the one you like{" "}
+        <strong>least</strong>. That extracts far more signal per screen, so it takes only a handful
+        of screens. We stop automatically once your profile is confident.
       </p>
 
       {saved && (
         <div className="resume">
-          <span>
-            You have a session in progress — {saved.count} of {saved.total} comparisons.
-          </span>
+          <span>You have a session in progress — {saved.screens} screens.</span>
           <button className="btn btn--primary" onClick={onResume}>
             Resume →
           </button>
@@ -35,14 +30,16 @@ export function Intro({ referenceCount, onStart, saved, onResume }: Props) {
 
       <ol className="intro__steps">
         <li>
-          <strong>Compare</strong> ~{rounds} pairs of {referenceCount} references — pick the one that
-          feels more right.
+          <strong>Most & least</strong> of four designs per screen — best–worst scaling, ~5 implied
+          comparisons each.
         </li>
         <li>
-          <strong>Flag</strong> any styles you actively want to avoid.
+          <strong>Adaptive</strong> — the set adapts and we stop as soon as the conjoint weights are
+          settled (usually ~12–16 screens).
         </li>
         <li>
-          <strong>Export</strong> your profile: axis scores, DTCG tokens, and a SKILL.md for Claude.
+          <strong>Export</strong> — axis scores, DTCG tokens, a SKILL.md and a paste-ready Claude
+          prompt.
         </li>
       </ol>
 
@@ -56,29 +53,14 @@ export function Intro({ referenceCount, onStart, saved, onResume }: Props) {
             onChange={(e) => setProject(e.target.value)}
           />
         </label>
-
-        <label className="field">
-          <span>
-            Comparisons: <strong>{rounds}</strong>{" "}
-            <small>(~{Math.max(1, Math.round((rounds * 4) / 60))} min)</small>
-          </span>
-          <input
-            type="range"
-            min={Math.max(10, Math.round(suggested / 2))}
-            max={suggested * 2}
-            value={rounds}
-            onChange={(e) => setRounds(Number(e.target.value))}
-          />
-        </label>
-
-        <button className="btn btn--primary" onClick={() => onStart(project, rounds)}>
+        <button className="btn btn--primary" onClick={() => onStart(project)}>
           Start →
         </button>
       </div>
 
       <p className="intro__note">
-        Tip: use <kbd>←</kbd> / <kbd>→</kbd> to pick and <kbd>space</kbd> to skip. Everything runs in
-        your browser — nothing is uploaded.
+        Tip: keys <kbd>1</kbd>–<kbd>4</kbd> select, <kbd>z</kbd> undoes, <kbd>s</kbd> skips.
+        Everything runs in your browser — nothing is uploaded.
       </p>
     </section>
   );
