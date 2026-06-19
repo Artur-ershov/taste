@@ -74,6 +74,15 @@ export interface AxisScore {
   confidence: number; // 0..1
 }
 
+/** Per-axis part-worth from the conjoint logit model (v2). */
+export interface AxisDriver {
+  id: AxisId;
+  /** signed utility weight (preferred direction + strength) */
+  weight: number;
+  /** |weight| normalized to 0..1 across axes (relative importance) */
+  importance: number;
+}
+
 /** The full three-layer aesthetic profile artifact. */
 export interface Profile {
   meta: {
@@ -84,6 +93,10 @@ export interface Profile {
     generator: string;
   };
   axes: AxisScore[];
+  /** Axes ranked by how much they drove the choices (conjoint part-worths). */
+  drivers: AxisDriver[];
+  /** Fraction of picks that agreed with the final ranking (0.5 = noise, 1 = perfectly transitive). */
+  consistency: number;
   /** Top-ranked references to emulate (ids). */
   emulate: string[];
   /** Bottom-ranked + explicitly rejected references to avoid (ids). */

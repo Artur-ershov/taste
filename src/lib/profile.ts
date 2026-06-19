@@ -1,4 +1,5 @@
 import type {
+  AxisDriver,
   AxisId,
   AxisScore,
   Comparison,
@@ -8,6 +9,7 @@ import type {
 } from "../types";
 import { AXIS_IDS } from "./axes";
 import { fitBradleyTerry } from "./bradleyTerry";
+import { fitUtilityModel } from "./utility";
 import { suggestedRounds } from "./pairing";
 
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
@@ -76,6 +78,23 @@ export function buildProfile(
     };
   });
 
+  // Conjoint logit: per-axis part-worths (v2).
+  const model = fitUtilityModel(refs, comparisons);
+  const drivers: AxisDriver[] = AXIS_IDS.map((a) => ({
+    id: a,
+    weight: model.weights[a],
+    importance: model.importance[a],
+  })).sort((x, y) => y.importance - x.importance);
+
+  // Consistency: how often a pick agreed with the final ranking.
+  let agree = 0;
+  for (const c of comparisons) {
+    if ((zById.get(c.winner) ?? 0) >= (zById.get(c.loser) ?? 0)) agree++;
+  }
+  const consistency = comparisons.length
+    ? Math.round((agree / comparisons.length) * 100) / 100
+    : 0.5;
+
   const emulate = ranking.slice(0, 4).map((s) => s.id);
 
   const avoidSet = new Set<string>();
@@ -94,6 +113,8 @@ export function buildProfile(
       generator: "Taste · aesthetic-profiling picker",
     },
     axes,
+    drivers,
+    consistency,
     emulate,
     avoid: [...avoidSet],
     ranking,

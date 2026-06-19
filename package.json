@@ -1,7 +1,7 @@
 {
   "name": "taste",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "description": "Aesthetic-profiling picker — swipe pairwise to generate a Claude-ready design taste profile (axis scores + DTCG tokens + SKILL.md).",
   "scripts": {

@@ -1,12 +1,13 @@
 import { useMemo, useState } from "react";
 import type { Profile, Reference } from "../types";
 import { AXIS_BY_ID } from "../lib/axes";
-import { buildBriefText, buildBundleJson, buildSkillMd } from "../lib/brief";
+import { buildBriefText, buildBundleJson, buildSkillMd, buildClaudePrompt, buildCssVars } from "../lib/brief";
 import { buildTokens } from "../lib/tokens";
 import { vectorFromScores } from "../lib/render";
 import { StimulusCard } from "./StimulusCard";
+import { Radar } from "./Radar";
 
-type Tab = "brief" | "axes" | "tokens" | "skill";
+type Tab = "brief" | "axes" | "tokens" | "skill" | "claude" | "css";
 
 function download(filename: string, text: string, type: string) {
   const blob = new Blob([text], { type });
@@ -45,16 +46,15 @@ export function Result({
   const [copied, setCopied] = useState(false);
 
   const artifacts = useMemo(() => {
-    const brief = buildBriefText(profile, byId);
     const bundle = buildBundleJson(profile, byId);
-    const tokens = buildTokens(profile.axes).dtcg;
-    const skill = buildSkillMd(profile, byId);
     return {
-      brief,
+      brief: buildBriefText(profile, byId),
       bundleJson: JSON.stringify(bundle, null, 2),
-      axesJson: JSON.stringify(bundle.axes, null, 2),
-      tokensJson: JSON.stringify(tokens, null, 2),
-      skill,
+      axesJson: JSON.stringify({ axes: bundle.axes, drivers: bundle.drivers }, null, 2),
+      tokensJson: JSON.stringify(buildTokens(profile.axes).dtcg, null, 2),
+      skill: buildSkillMd(profile, byId),
+      claude: buildClaudePrompt(profile, byId),
+      css: buildCssVars(profile),
     };
   }, [profile, byId]);
 
@@ -63,6 +63,8 @@ export function Result({
     axes: artifacts.axesJson,
     tokens: artifacts.tokensJson,
     skill: artifacts.skill,
+    claude: artifacts.claude,
+    css: artifacts.css,
   };
 
   const copy = async () => {
@@ -72,6 +74,7 @@ export function Result({
   };
 
   const profileVector = vectorFromScores(profile.axes);
+  const topDrivers = profile.drivers.filter((d) => d.importance >= 0.15).slice(0, 7);
 
   return (
     <section className="result">
@@ -80,7 +83,8 @@ export function Result({
           <p className="result__eyebrow">Aesthetic profile</p>
           <h2 className="result__title">{profile.meta.project}</h2>
           <p className="result__sub">
-            {profile.meta.comparisons} comparisons · {profile.meta.referenceCount} references
+            {profile.meta.comparisons} comparisons · {profile.meta.referenceCount} references ·{" "}
+            {Math.round(profile.consistency * 100)}% pick consistency
           </p>
         </div>
         <button className="btn btn--ghost" onClick={onRestart}>
@@ -91,7 +95,7 @@ export function Result({
       <div className="result__cols">
         <div className="panel panel--synth">
           <h3>Your synthesized style</h3>
-          <p className="panel__hint">A mockup rendered from your axis scores.</p>
+          <p className="panel__hint">A live mockup rendered from your axis scores.</p>
           <div className="synth__card">
             <StimulusCard axes={profileVector} />
           </div>
@@ -116,10 +120,33 @@ export function Result({
                     <div className="axis__center" />
                     <div className="axis__fill" style={{ left: `${left}%`, width: `${width}%` }} />
                   </div>
-                  <div className="axis__val">
-                    {a.value > 0 ? "+" : ""}
-                    {a.value}
-                    {low && <span className="axis__low"> · low conf.</span>}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      <div className="panel">
+        <h3>What drives your taste</h3>
+        <p className="panel__hint">
+          Per-axis weights from a conjoint logit model — how much each axis actually decided your picks.
+        </p>
+        <div className="drivers">
+          <div className="drivers__radar">
+            <Radar drivers={profile.drivers} />
+          </div>
+          <div className="drivers__list">
+            {topDrivers.map((d) => {
+              const def = AXIS_BY_ID[d.id];
+              const pole = d.weight > 0 ? def.highPole : def.lowPole;
+              return (
+                <div className="driver" key={d.id}>
+                  <span className="driver__name">
+                    {def.label} → <strong>{pole}</strong>
+                  </span>
+                  <div className="driver__track">
+                    <div className="driver__fill" style={{ width: `${Math.round(d.importance * 100)}%` }} />
                   </div>
                 </div>
               );
@@ -153,9 +180,18 @@ export function Result({
         <div className="export__head">
           <h3>Export</h3>
           <div className="tabs">
-            {(["brief", "axes", "tokens", "skill"] as Tab[]).map((t) => (
+            {(
+              [
+                ["brief", "Brief"],
+                ["claude", "Claude prompt"],
+                ["skill", "SKILL.md"],
+                ["tokens", "Tokens"],
+                ["css", "CSS"],
+                ["axes", "Axes"],
+              ] as [Tab, string][]
+            ).map(([t, label]) => (
               <button key={t} className={`tab${tab === t ? " tab--on" : ""}`} onClick={() => setTab(t)}>
-                {t === "brief" ? "Brief" : t === "axes" ? "Axis JSON" : t === "tokens" ? "Tokens" : "SKILL.md"}
+                {label}
               </button>
             ))}
           </div>
@@ -165,16 +201,19 @@ export function Result({
 
         <div className="export__actions">
           <button className="btn btn--primary" onClick={copy}>
-            {copied ? "Copied ✓" : "Copy"}
+            {copied ? "Copied ✓" : "Copy current tab"}
           </button>
           <button className="btn btn--ghost" onClick={() => download("aesthetic-profile.json", artifacts.bundleJson, "application/json")}>
             ↓ profile.json
           </button>
           <button className="btn btn--ghost" onClick={() => download("design.tokens.json", artifacts.tokensJson, "application/design-tokens+json")}>
-            ↓ design.tokens.json
+            ↓ tokens.json
           </button>
           <button className="btn btn--ghost" onClick={() => download("SKILL.md", artifacts.skill, "text/markdown")}>
             ↓ SKILL.md
+          </button>
+          <button className="btn btn--ghost" onClick={() => download("taste.css", artifacts.css, "text/css")}>
+            ↓ taste.css
           </button>
         </div>
       </div>

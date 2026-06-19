@@ -15,6 +15,29 @@ entirely in your browser — nothing is uploaded.
 intro ─▶ compare (2AFC × ~N) ─▶ flag styles to avoid ─▶ profile + export
 ```
 
+## Live
+
+- **v2** (current): https://artur-ershov.github.io/taste/v2/
+- **v1** (preserved for comparison): https://artur-ershov.github.io/taste/
+
+Both are published from this repo by one Actions workflow — v1 from a frozen
+snapshot in `frozen/v1/`, v2 from the current build.
+
+## What's new in v2
+
+- **Conjoint logit model** (`lib/utility.ts`) — learns true per-axis *part-worths*
+  (importance + direction) by fitting a discrete-choice model to the pairwise
+  outcomes, disentangling axes that co-occur in the stimulus set. This is the
+  roadmap's #1 "break the confounding" item.
+- **Information-gain pairing** — once the model is trained, the next pair is the
+  one it's most *uncertain* about, not just the nearest in Elo.
+- **Realistic stimuli** — each reference now renders as a full landing-page
+  screenshot in a browser window (nav, hero + product image, logo cloud,
+  feature cards, footer) instead of abstract shapes.
+- **Undo + autosave/resume** — sessions survive a refresh; step back with `z`.
+- **Importance radar + "what drives your taste"** and a **pick-consistency** score.
+- **Two new exports** — a paste-ready **Claude prompt** and **CSS `:root` variables**.
+
 ## Quick start
 
 ```bash
@@ -104,15 +127,14 @@ the three artifacts look like.
 
 ## Roadmap
 
-This is the recommended "Stage 1" build. Natural next steps:
+v2 shipped the conjoint part-worths and information-gain pairing. Remaining:
 
-- **Per-axis part-worths** via a discrete-choice (logit) regression on the tags,
-  for defensible per-attribute weights rather than averaged tags.
 - **Controlled single-axis pairs** for the 3–4 axes that matter most, to break
-  residual confounding.
-- **Full active sampling** (Crowd-BT / ASAP) to cut session length further.
-- **Real screenshots** + a vision-model auto-tagger with human QA, if you want
-  organic stimuli alongside the rendered ones.
+  residual confounding entirely.
+- **Full active sampling** (Crowd-BT / ASAP) — v2 uses a model-uncertainty
+  heuristic; a posterior-variance objective would cut sessions further.
+- **Real screenshots** + a vision-model auto-tagger with human QA, alongside the
+  rendered stimuli.
 
 ## Prior art
 

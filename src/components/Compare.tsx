@@ -8,9 +8,11 @@ interface Props {
   total: number;
   onPick: (winner: string, loser: string) => void;
   onSkip: () => void;
+  onUndo: () => void;
+  canUndo: boolean;
 }
 
-export function Compare({ pair, round, total, onPick, onSkip }: Props) {
+export function Compare({ pair, round, total, onPick, onSkip, onUndo, canUndo }: Props) {
   const [left, right] = pair;
 
   useEffect(() => {
@@ -20,11 +22,14 @@ export function Compare({ pair, round, total, onPick, onSkip }: Props) {
       else if (e.key === " " || e.key === "Enter") {
         e.preventDefault();
         onSkip();
+      } else if ((e.key === "Backspace" || e.key === "z") && canUndo) {
+        e.preventDefault();
+        onUndo();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [left, right, onPick, onSkip]);
+  }, [left, right, onPick, onSkip, onUndo, canUndo]);
 
   const pct = Math.round((round / total) * 100);
 
@@ -57,6 +62,9 @@ export function Compare({ pair, round, total, onPick, onSkip }: Props) {
       </div>
 
       <div className="compare__foot">
+        <button className="btn btn--ghost" onClick={onUndo} disabled={!canUndo}>
+          ← Undo <kbd>z</kbd>
+        </button>
         <button className="btn btn--ghost" onClick={onSkip}>
           Hard to tell — skip <kbd>space</kbd>
         </button>

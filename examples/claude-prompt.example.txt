@@ -1,0 +1,19 @@
+Apply this aesthetic profile to everything you design for "Acme — warm editorial" — layout, color, type, spacing — instead of generic defaults.
+
+Feel: This taste profile favors clearly high typographic contrast with large display type, expressive, characterful display/serif type, a polished, refined finish, a light, bright canvas and a strict, aligned grid. Lean into the spirit of: Editorial Serif, Editorial Serif · Dark, Editorial Serif · Bold, Bauhaus Primary. Steer away from: Vivid Maximal · Cool, Dark Techno, Vivid Maximal · Dark, Soft Minimal · Dark.
+
+Priority axes: Type voice→Expressive, Tone→Light, Depth→Flat, Saturation→Muted, Layout→Structured, Temperature→Warm.
+
+Tokens (OKLCH, hex in parens):
+- background oklch(0.96 0.014 54.7) (#faf0e9)
+- surface oklch(0.972 0.011 54.7) (#fcf4ef)
+- text oklch(0.21 0.007 54.7) (#1b1815)
+- primary oklch(0.56 0.113 54.7) (#a6602b)
+- accent oklch(0.62 0.107 204.7) (#0098a4)
+- radius 8px; spacing 13px base scale; border 2px
+- headings Georgia, "Times New Roman", "Playfair Display", serif; body "Inter", "Helvetica Neue", system-ui, sans-serif
+- shadow 0 11px 28px rgba(15,23,42,0.16)
+
+Emulate the spirit of: Editorial Serif, Editorial Serif · Dark, Editorial Serif · Bold, Bauhaus Primary.
+Avoid: Vivid Maximal · Cool, Dark Techno, Vivid Maximal · Dark, Soft Minimal · Dark.
+When in doubt, stay consistent with the feel above and prefer the priority axes.

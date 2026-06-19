@@ -51,6 +51,21 @@ for (let i = 0; i < ROUNDS; i++) {
 const profile = buildProfile(REFERENCES, comparisons, strengths, [], "Verify run");
 const byId = new Map(REFERENCES.map((r) => [r.id, r]));
 
+console.log("=== Conjoint drivers (top 6) — sign should match planted target ===");
+let driverHits = 0;
+let driverChecks = 0;
+for (const d of profile.drivers.slice(0, 6)) {
+  const t = TARGET[d.id];
+  const ok = Math.abs(t) < 18 || Math.sign(d.weight) === Math.sign(t);
+  if (Math.abs(t) >= 18) {
+    driverChecks++;
+    if (ok) driverHits++;
+  }
+  console.log(`${d.id.padEnd(16)} weight=${d.weight.toFixed(2).padStart(6)} importance=${d.importance.toFixed(2)} target=${String(t).padStart(4)} ${ok ? "ok" : "MISS"}`);
+}
+console.log(`Driver sign agreement: ${driverHits}/${driverChecks}`);
+console.log(`Pick consistency: ${profile.consistency}`);
+
 console.log("=== Axis recovery (profile vs planted target) ===");
 let agree = 0;
 for (const s of profile.axes) {
@@ -84,6 +99,14 @@ console.log(buildSkillMd(profile, byId).split("\n").slice(0, 18).join("\n"));
 
 if (agree < 9) {
   console.error("\nFAIL: weak axis recovery");
+  process.exit(1);
+}
+if (driverHits < driverChecks - 1) {
+  console.error("\nFAIL: conjoint drivers don't match planted preference");
+  process.exit(1);
+}
+if (profile.consistency < 0.6) {
+  console.error("\nFAIL: low pick consistency");
   process.exit(1);
 }
 console.log("\nPASS");

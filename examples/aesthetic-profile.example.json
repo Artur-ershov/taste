@@ -2,144 +2,231 @@
   "$generator": "Taste · aesthetic-profiling picker",
   "meta": {
     "project": "Acme — warm editorial",
-    "createdAt": "2026-06-19T14:24:17.011Z",
+    "createdAt": "2026-06-19T17:10:17.373Z",
     "comparisons": 140,
     "referenceCount": 34,
     "generator": "Taste · aesthetic-profiling picker"
   },
-  "brief": "This taste profile favors clearly high typographic contrast with large display type, a polished, refined finish, expressive, characterful display/serif type, a strict, aligned grid and a light, bright canvas. Lean into the spirit of: Editorial Serif, Editorial Serif · Bold, Luxury Dark, Editorial Serif · Dark. Steer away from: Vivid Maximal · Dark, Vivid Maximal, Neo-Brutalist · Cyan, Dark Techno.",
+  "consistency": 0.84,
+  "brief": "This taste profile favors clearly high typographic contrast with large display type, expressive, characterful display/serif type, a polished, refined finish, a light, bright canvas and a strict, aligned grid. Lean into the spirit of: Editorial Serif, Editorial Serif · Dark, Editorial Serif · Bold, Bauhaus Primary. Steer away from: Vivid Maximal · Cool, Dark Techno, Vivid Maximal · Dark, Soft Minimal · Dark.",
   "axes": [
     {
       "id": "tone",
       "label": "Tone",
-      "value": -22,
+      "value": -26,
       "pole": "Light",
-      "confidence": 0.29
+      "confidence": 0.36
     },
     {
       "id": "density",
       "label": "Density",
-      "value": -14,
+      "value": -10,
       "pole": "Airy",
-      "confidence": 0.69
+      "confidence": 0.71
     },
     {
       "id": "complexity",
       "label": "Complexity",
-      "value": -6,
+      "value": -4,
       "pole": "Minimal",
-      "confidence": 0.57
+      "confidence": 0.63
     },
     {
       "id": "saturation",
       "label": "Saturation",
-      "value": -17,
+      "value": -15,
       "pole": "Muted",
-      "confidence": 0.45
+      "confidence": 0.42
     },
     {
       "id": "temperature",
       "label": "Temperature",
-      "value": 16,
+      "value": 17,
       "pole": "Warm",
-      "confidence": 0.55
+      "confidence": 0.56
     },
     {
       "id": "cornerSoftness",
       "label": "Corners",
-      "value": -7,
+      "value": -12,
       "pole": "Sharp",
-      "confidence": 0.33
+      "confidence": 0.35
     },
     {
       "id": "depth",
       "label": "Depth",
-      "value": 2,
-      "pole": "Layered",
-      "confidence": 0.61
+      "value": -2,
+      "pole": "Flat",
+      "confidence": 0.64
     },
     {
       "id": "typeContrast",
       "label": "Type contrast",
-      "value": 56,
+      "value": 57,
       "pole": "Dramatic",
-      "confidence": 0.59
+      "confidence": 0.66
     },
     {
       "id": "typePersonality",
       "label": "Type voice",
-      "value": 35,
+      "value": 41,
       "pole": "Expressive",
-      "confidence": 0.25
+      "confidence": 0.29
     },
     {
       "id": "geometry",
       "label": "Geometry",
-      "value": -12,
+      "value": -14,
       "pole": "Geometric",
-      "confidence": 0.42
+      "confidence": 0.37
     },
     {
       "id": "gridStrictness",
       "label": "Layout",
-      "value": -25,
+      "value": -21,
       "pole": "Structured",
       "confidence": 0.59
     },
     {
       "id": "brutalism",
       "label": "Finish",
-      "value": -41,
+      "value": -37,
       "pole": "Refined",
-      "confidence": 0.6
+      "confidence": 0.58
+    }
+  ],
+  "drivers": [
+    {
+      "id": "typePersonality",
+      "label": "Type voice",
+      "weight": 0.71,
+      "importance": 1,
+      "pole": "Expressive"
+    },
+    {
+      "id": "tone",
+      "label": "Tone",
+      "weight": -0.485,
+      "importance": 0.682,
+      "pole": "Light"
+    },
+    {
+      "id": "depth",
+      "label": "Depth",
+      "weight": -0.445,
+      "importance": 0.626,
+      "pole": "Flat"
+    },
+    {
+      "id": "saturation",
+      "label": "Saturation",
+      "weight": -0.416,
+      "importance": 0.586,
+      "pole": "Muted"
+    },
+    {
+      "id": "gridStrictness",
+      "label": "Layout",
+      "weight": -0.375,
+      "importance": 0.528,
+      "pole": "Structured"
+    },
+    {
+      "id": "temperature",
+      "label": "Temperature",
+      "weight": 0.373,
+      "importance": 0.525,
+      "pole": "Warm"
+    },
+    {
+      "id": "geometry",
+      "label": "Geometry",
+      "weight": -0.319,
+      "importance": 0.449,
+      "pole": "Geometric"
+    },
+    {
+      "id": "brutalism",
+      "label": "Finish",
+      "weight": -0.312,
+      "importance": 0.439,
+      "pole": "Refined"
+    },
+    {
+      "id": "typeContrast",
+      "label": "Type contrast",
+      "weight": 0.263,
+      "importance": 0.37,
+      "pole": "Dramatic"
+    },
+    {
+      "id": "cornerSoftness",
+      "label": "Corners",
+      "weight": -0.208,
+      "importance": 0.293,
+      "pole": "Sharp"
+    },
+    {
+      "id": "density",
+      "label": "Density",
+      "weight": -0.186,
+      "importance": 0.262,
+      "pole": "Airy"
+    },
+    {
+      "id": "complexity",
+      "label": "Complexity",
+      "weight": -0.117,
+      "importance": 0.165,
+      "pole": "Minimal"
     }
   ],
   "tokens": {
     "color": {
       "background": {
         "$type": "color",
-        "$value": "oklch(0.959 0.013 215)",
-        "$description": "Page background · #e8f4f7"
+        "$value": "oklch(0.96 0.014 54.7)",
+        "$description": "Page background · #faf0e9"
       },
       "surface": {
         "$type": "color",
-        "$value": "oklch(0.971 0.011 215)",
-        "$description": "Card / panel surface · #eef7fa"
+        "$value": "oklch(0.972 0.011 54.7)",
+        "$description": "Card / panel surface · #fcf4ef"
       },
       "surface-alt": {
         "$type": "color",
-        "$value": "oklch(0.934 0.013 215)",
-        "$description": "Secondary surface · #e0ecef"
+        "$value": "oklch(0.935 0.014 54.7)",
+        "$description": "Secondary surface · #f1e7e1"
       },
       "text": {
         "$type": "color",
-        "$value": "oklch(0.21 0.007 215)",
-        "$description": "Primary text · #15191a"
+        "$value": "oklch(0.21 0.007 54.7)",
+        "$description": "Primary text · #1b1815"
       },
       "text-muted": {
         "$type": "color",
-        "$value": "oklch(0.46 0.008 215)",
-        "$description": "Secondary text · #53595b"
+        "$value": "oklch(0.46 0.008 54.7)",
+        "$description": "Secondary text · #5c5754"
       },
       "border": {
         "$type": "color",
-        "$value": "oklch(0.859 0.009 215)",
-        "$description": "Hairline / divider · #cad2d4"
+        "$value": "oklch(0.86 0.01 54.7)",
+        "$description": "Hairline / divider · #d6d0cb"
       },
       "primary": {
         "$type": "color",
-        "$value": "oklch(0.56 0.111 215)",
-        "$description": "Primary action · #00849d"
+        "$value": "oklch(0.56 0.113 54.7)",
+        "$description": "Primary action · #a6602b"
       },
       "primary-foreground": {
         "$type": "color",
-        "$value": "oklch(0.99 0 215)",
+        "$value": "oklch(0.99 0 54.7)",
         "$description": "Text on primary · #fcfcfc"
       },
       "accent": {
         "$type": "color",
-        "$value": "oklch(0.62 0.106 5)",
-        "$description": "Accent / highlight · #bb6a7d"
+        "$value": "oklch(0.62 0.107 204.7)",
+        "$description": "Accent / highlight · #0098a4"
       }
     },
     "spacing": {
@@ -295,41 +382,41 @@
       "family": "Editorial"
     },
     {
+      "id": "editorial-serif-dark",
+      "name": "Editorial Serif · Dark",
+      "family": "Editorial"
+    },
+    {
       "id": "editorial-serif-bold",
       "name": "Editorial Serif · Bold",
       "family": "Editorial"
     },
     {
-      "id": "luxury-dark",
-      "name": "Luxury Dark",
-      "family": "Luxury editorial"
-    },
-    {
-      "id": "editorial-serif-dark",
-      "name": "Editorial Serif · Dark",
-      "family": "Editorial"
+      "id": "bauhaus-primary",
+      "name": "Bauhaus Primary",
+      "family": "Geometric primary"
     }
   ],
   "avoid": [
+    {
+      "id": "vivid-maximal-cool",
+      "name": "Vivid Maximal · Cool",
+      "family": "Maximalist"
+    },
+    {
+      "id": "dark-techno",
+      "name": "Dark Techno",
+      "family": "Dark technical"
+    },
     {
       "id": "vivid-maximal-dark",
       "name": "Vivid Maximal · Dark",
       "family": "Maximalist"
     },
     {
-      "id": "vivid-maximal",
-      "name": "Vivid Maximal",
-      "family": "Maximalist"
-    },
-    {
-      "id": "neo-brutalist-cyan",
-      "name": "Neo-Brutalist · Cyan",
-      "family": "Neo-brutalist"
-    },
-    {
-      "id": "dark-techno",
-      "name": "Dark Techno",
-      "family": "Dark technical"
+      "id": "soft-minimal-dark",
+      "name": "Soft Minimal · Dark",
+      "family": "Soft minimalist"
     }
   ],
   "ranking": [
@@ -337,272 +424,272 @@
       "id": "editorial-serif",
       "name": "Editorial Serif",
       "family": "Editorial",
-      "bt": 2.348,
-      "elo": 1594,
-      "comparisons": 8
-    },
-    {
-      "id": "editorial-serif-bold",
-      "name": "Editorial Serif · Bold",
-      "family": "Editorial",
-      "bt": 1.816,
-      "elo": 1568,
-      "comparisons": 8
-    },
-    {
-      "id": "luxury-dark",
-      "name": "Luxury Dark",
-      "family": "Luxury editorial",
-      "bt": 1.506,
-      "elo": 1568,
+      "bt": 2.797,
+      "elo": 1589,
       "comparisons": 8
     },
     {
       "id": "editorial-serif-dark",
       "name": "Editorial Serif · Dark",
       "family": "Editorial",
-      "bt": 1.238,
-      "elo": 1547,
-      "comparisons": 8
-    },
-    {
-      "id": "corporate-clean-warm",
-      "name": "Corporate Clean · Warm",
-      "family": "Corporate clean",
-      "bt": 1.047,
-      "elo": 1547,
-      "comparisons": 8
-    },
-    {
-      "id": "luxury-dark-cool",
-      "name": "Luxury Dark · Cool",
-      "family": "Luxury editorial",
-      "bt": 0.766,
-      "elo": 1524,
-      "comparisons": 8
-    },
-    {
-      "id": "pastel-playful-cool",
-      "name": "Pastel Playful · Cool",
-      "family": "Playful pastel",
-      "bt": 0.694,
-      "elo": 1525,
-      "comparisons": 8
-    },
-    {
-      "id": "soft-minimal",
-      "name": "Soft Minimal",
-      "family": "Soft minimalist",
-      "bt": 0.656,
-      "elo": 1535,
+      "bt": 1.886,
+      "elo": 1576,
       "comparisons": 9
     },
     {
-      "id": "swiss-mono-red",
-      "name": "Swiss Mono · Red accent",
-      "family": "Swiss / International",
-      "bt": 0.533,
-      "elo": 1520,
-      "comparisons": 8
-    },
-    {
-      "id": "swiss-mono",
-      "name": "Swiss Mono",
-      "family": "Swiss / International",
-      "bt": 0.462,
-      "elo": 1505,
-      "comparisons": 8
+      "id": "editorial-serif-bold",
+      "name": "Editorial Serif · Bold",
+      "family": "Editorial",
+      "bt": 1.488,
+      "elo": 1540,
+      "comparisons": 9
     },
     {
       "id": "bauhaus-primary",
       "name": "Bauhaus Primary",
       "family": "Geometric primary",
-      "bt": 0.461,
-      "elo": 1513,
-      "comparisons": 7
-    },
-    {
-      "id": "pastel-playful-vivid",
-      "name": "Pastel Playful · Vivid",
-      "family": "Playful pastel",
-      "bt": 0.441,
-      "elo": 1523,
-      "comparisons": 8
-    },
-    {
-      "id": "warm-organic",
-      "name": "Warm Organic",
-      "family": "Warm organic",
-      "bt": 0.309,
-      "elo": 1499,
-      "comparisons": 8
-    },
-    {
-      "id": "warm-organic-muted",
-      "name": "Warm Organic · Muted",
-      "family": "Warm organic",
-      "bt": 0.258,
-      "elo": 1509,
-      "comparisons": 9
-    },
-    {
-      "id": "corporate-clean",
-      "name": "Corporate Clean",
-      "family": "Corporate clean",
-      "bt": 0.211,
-      "elo": 1509,
-      "comparisons": 9
-    },
-    {
-      "id": "soft-minimal-warm",
-      "name": "Soft Minimal · Warm",
-      "family": "Soft minimalist",
-      "bt": 0.2,
-      "elo": 1523,
-      "comparisons": 8
-    },
-    {
-      "id": "swiss-mono-airy",
-      "name": "Swiss Mono · Airy",
-      "family": "Swiss / International",
-      "bt": 0.164,
-      "elo": 1498,
+      "bt": 1.054,
+      "elo": 1564,
       "comparisons": 8
     },
     {
       "id": "pastel-playful",
       "name": "Pastel Playful",
       "family": "Playful pastel",
-      "bt": 0.13,
-      "elo": 1501,
+      "bt": 0.94,
+      "elo": 1542,
+      "comparisons": 8
+    },
+    {
+      "id": "dark-techno-light",
+      "name": "Dark Techno · Light",
+      "family": "Dark technical",
+      "bt": 0.903,
+      "elo": 1562,
+      "comparisons": 8
+    },
+    {
+      "id": "warm-organic-muted",
+      "name": "Warm Organic · Muted",
+      "family": "Warm organic",
+      "bt": 0.852,
+      "elo": 1525,
+      "comparisons": 8
+    },
+    {
+      "id": "warm-organic",
+      "name": "Warm Organic",
+      "family": "Warm organic",
+      "bt": 0.77,
+      "elo": 1538,
+      "comparisons": 8
+    },
+    {
+      "id": "corporate-clean-warm",
+      "name": "Corporate Clean · Warm",
+      "family": "Corporate clean",
+      "bt": 0.686,
+      "elo": 1525,
+      "comparisons": 8
+    },
+    {
+      "id": "swiss-mono-red",
+      "name": "Swiss Mono · Red accent",
+      "family": "Swiss / International",
+      "bt": 0.512,
+      "elo": 1499,
+      "comparisons": 8
+    },
+    {
+      "id": "warm-organic-dark",
+      "name": "Warm Organic · Dark",
+      "family": "Warm organic",
+      "bt": 0.511,
+      "elo": 1533,
+      "comparisons": 9
+    },
+    {
+      "id": "swiss-mono",
+      "name": "Swiss Mono",
+      "family": "Swiss / International",
+      "bt": 0.42,
+      "elo": 1520,
+      "comparisons": 8
+    },
+    {
+      "id": "luxury-dark-cool",
+      "name": "Luxury Dark · Cool",
+      "family": "Luxury editorial",
+      "bt": 0.405,
+      "elo": 1532,
+      "comparisons": 7
+    },
+    {
+      "id": "corporate-clean",
+      "name": "Corporate Clean",
+      "family": "Corporate clean",
+      "bt": 0.122,
+      "elo": 1508,
+      "comparisons": 9
+    },
+    {
+      "id": "pastel-playful-cool",
+      "name": "Pastel Playful · Cool",
+      "family": "Playful pastel",
+      "bt": 0.105,
+      "elo": 1509,
+      "comparisons": 9
+    },
+    {
+      "id": "luxury-dark",
+      "name": "Luxury Dark",
+      "family": "Luxury editorial",
+      "bt": 0.09,
+      "elo": 1483,
+      "comparisons": 8
+    },
+    {
+      "id": "soft-minimal-warm",
+      "name": "Soft Minimal · Warm",
+      "family": "Soft minimalist",
+      "bt": 0.077,
+      "elo": 1476,
+      "comparisons": 9
+    },
+    {
+      "id": "swiss-mono-airy",
+      "name": "Swiss Mono · Airy",
+      "family": "Swiss / International",
+      "bt": 0.059,
+      "elo": 1482,
+      "comparisons": 8
+    },
+    {
+      "id": "soft-minimal",
+      "name": "Soft Minimal",
+      "family": "Soft minimalist",
+      "bt": -0.213,
+      "elo": 1458,
       "comparisons": 8
     },
     {
       "id": "corporate-clean-flat",
       "name": "Corporate Clean · Flat",
       "family": "Corporate clean",
-      "bt": -0.085,
-      "elo": 1498,
+      "bt": -0.272,
+      "elo": 1480,
+      "comparisons": 8
+    },
+    {
+      "id": "glass-gradient-warm",
+      "name": "Glass Gradient · Warm",
+      "family": "Glassmorphic",
+      "bt": -0.479,
+      "elo": 1487,
+      "comparisons": 9
+    },
+    {
+      "id": "neo-brutalist-mono",
+      "name": "Neo-Brutalist · Mono",
+      "family": "Neo-brutalist",
+      "bt": -0.513,
+      "elo": 1481,
       "comparisons": 8
     },
     {
       "id": "bauhaus-primary-round",
       "name": "Bauhaus Primary · Round",
       "family": "Geometric primary",
-      "bt": -0.175,
-      "elo": 1512,
-      "comparisons": 9
-    },
-    {
-      "id": "soft-minimal-dark",
-      "name": "Soft Minimal · Dark",
-      "family": "Soft minimalist",
-      "bt": -0.276,
-      "elo": 1500,
-      "comparisons": 8
-    },
-    {
-      "id": "neo-brutalist-mono",
-      "name": "Neo-Brutalist · Mono",
-      "family": "Neo-brutalist",
-      "bt": -0.292,
-      "elo": 1466,
-      "comparisons": 9
-    },
-    {
-      "id": "vivid-maximal-cool",
-      "name": "Vivid Maximal · Cool",
-      "family": "Maximalist",
-      "bt": -0.413,
-      "elo": 1486,
-      "comparisons": 9
-    },
-    {
-      "id": "warm-organic-dark",
-      "name": "Warm Organic · Dark",
-      "family": "Warm organic",
-      "bt": -0.43,
-      "elo": 1490,
-      "comparisons": 9
-    },
-    {
-      "id": "dark-techno-light",
-      "name": "Dark Techno · Light",
-      "family": "Dark technical",
-      "bt": -0.446,
-      "elo": 1501,
-      "comparisons": 8
-    },
-    {
-      "id": "dark-techno-magenta",
-      "name": "Dark Techno · Magenta",
-      "family": "Dark technical",
-      "bt": -0.455,
+      "bt": -0.557,
       "elo": 1475,
       "comparisons": 8
     },
     {
-      "id": "glass-gradient-light",
-      "name": "Glass Gradient · Light",
-      "family": "Glassmorphic",
-      "bt": -0.81,
-      "elo": 1476,
-      "comparisons": 8
-    },
-    {
-      "id": "glass-gradient",
-      "name": "Glass Gradient",
-      "family": "Glassmorphic",
-      "bt": -0.826,
-      "elo": 1468,
-      "comparisons": 9
-    },
-    {
-      "id": "glass-gradient-warm",
-      "name": "Glass Gradient · Warm",
-      "family": "Glassmorphic",
-      "bt": -0.867,
-      "elo": 1453,
+      "id": "pastel-playful-vivid",
+      "name": "Pastel Playful · Vivid",
+      "family": "Playful pastel",
+      "bt": -0.713,
+      "elo": 1456,
       "comparisons": 8
     },
     {
       "id": "neo-brutalist",
       "name": "Neo-Brutalist",
       "family": "Neo-brutalist",
-      "bt": -1.016,
-      "elo": 1456,
-      "comparisons": 8
-    },
-    {
-      "id": "dark-techno",
-      "name": "Dark Techno",
-      "family": "Dark technical",
-      "bt": -1.384,
-      "elo": 1432,
-      "comparisons": 8
-    },
-    {
-      "id": "neo-brutalist-cyan",
-      "name": "Neo-Brutalist · Cyan",
-      "family": "Neo-brutalist",
-      "bt": -1.598,
-      "elo": 1430,
+      "bt": -0.733,
+      "elo": 1478,
       "comparisons": 8
     },
     {
       "id": "vivid-maximal",
       "name": "Vivid Maximal",
       "family": "Maximalist",
-      "bt": -1.656,
-      "elo": 1440,
+      "bt": -0.758,
+      "elo": 1477,
+      "comparisons": 8
+    },
+    {
+      "id": "glass-gradient",
+      "name": "Glass Gradient",
+      "family": "Glassmorphic",
+      "bt": -0.772,
+      "elo": 1485,
       "comparisons": 9
+    },
+    {
+      "id": "neo-brutalist-cyan",
+      "name": "Neo-Brutalist · Cyan",
+      "family": "Neo-brutalist",
+      "bt": -0.817,
+      "elo": 1478,
+      "comparisons": 8
+    },
+    {
+      "id": "glass-gradient-light",
+      "name": "Glass Gradient · Light",
+      "family": "Glassmorphic",
+      "bt": -0.837,
+      "elo": 1480,
+      "comparisons": 8
+    },
+    {
+      "id": "dark-techno-magenta",
+      "name": "Dark Techno · Magenta",
+      "family": "Dark technical",
+      "bt": -0.922,
+      "elo": 1494,
+      "comparisons": 8
+    },
+    {
+      "id": "soft-minimal-dark",
+      "name": "Soft Minimal · Dark",
+      "family": "Soft minimalist",
+      "bt": -1.27,
+      "elo": 1438,
+      "comparisons": 8
     },
     {
       "id": "vivid-maximal-dark",
       "name": "Vivid Maximal · Dark",
       "family": "Maximalist",
-      "bt": -2.511,
-      "elo": 1408,
+      "bt": -1.335,
+      "elo": 1452,
+      "comparisons": 8
+    },
+    {
+      "id": "dark-techno",
+      "name": "Dark Techno",
+      "family": "Dark technical",
+      "bt": -1.562,
+      "elo": 1443,
+      "comparisons": 9
+    },
+    {
+      "id": "vivid-maximal-cool",
+      "name": "Vivid Maximal · Cool",
+      "family": "Maximalist",
+      "bt": -1.925,
+      "elo": 1434,
       "comparisons": 8
     }
   ]

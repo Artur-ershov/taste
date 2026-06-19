@@ -4,9 +4,11 @@ import { suggestedRounds } from "../lib/pairing";
 interface Props {
   referenceCount: number;
   onStart: (project: string, rounds: number) => void;
+  saved: { count: number; total: number } | null;
+  onResume: () => void;
 }
 
-export function Intro({ referenceCount, onStart }: Props) {
+export function Intro({ referenceCount, onStart, saved, onResume }: Props) {
   const suggested = suggestedRounds(referenceCount);
   const [project, setProject] = useState("");
   const [rounds, setRounds] = useState(suggested);
@@ -16,9 +18,20 @@ export function Intro({ referenceCount, onStart }: Props) {
       <h1 className="intro__title">Taste</h1>
       <p className="intro__lede">
         A pairwise picker that turns your eye into a Claude-ready aesthetic profile. Compare design
-        references two at a time; we rank them with Elo + Bradley-Terry and export axis scores,
-        W3C design tokens, and a <code>SKILL.md</code> brief.
+        references two at a time; we rank them with a conjoint logit model + Elo/Bradley-Terry and
+        export axis scores, W3C design tokens, a <code>SKILL.md</code> and a paste-ready Claude prompt.
       </p>
+
+      {saved && (
+        <div className="resume">
+          <span>
+            You have a session in progress — {saved.count} of {saved.total} comparisons.
+          </span>
+          <button className="btn btn--primary" onClick={onResume}>
+            Resume →
+          </button>
+        </div>
+      )}
 
       <ol className="intro__steps">
         <li>
