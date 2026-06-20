@@ -184,8 +184,8 @@ export function StimulusCard({
         display: "flex",
         flexDirection: "column",
         gap: s.gap * 0.7,
-        alignItems: centered ? "center" : "flex-start",
-        textAlign: centered ? "center" : "left",
+        alignItems: "flex-start",
+        textAlign: "left",
         flex: centered ? undefined : 1,
       }}
     >
@@ -265,12 +265,12 @@ export function StimulusCard({
 
         {/* hero */}
         {centered ? (
-          <div style={{ display: "flex", flexDirection: "column", gap: s.gap, alignItems: "center" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: s.gap, alignItems: "stretch" }}>
             {heroText}
             {media}
           </div>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 0.95fr)", gap: s.gap, alignItems: "center" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 0.95fr)", gap: s.gap, alignItems: "start" }}>
             {heroText}
             {media}
           </div>
