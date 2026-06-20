@@ -10,6 +10,7 @@ import type {
 import { AXIS_IDS } from "./axes";
 import { fitBradleyTerry } from "./bradleyTerry";
 import { fitUtilityModel } from "./utility";
+import { heldOutAccuracy } from "./validate";
 import { suggestedRounds } from "./pairing";
 
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
@@ -115,6 +116,7 @@ export function buildProfile(
     axes,
     drivers,
     consistency,
+    validation: heldOutAccuracy(refs, comparisons),
     emulate,
     avoid: [...avoidSet],
     ranking,

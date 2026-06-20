@@ -3,6 +3,7 @@ import { REFERENCES } from "./data/references";
 import { Intro } from "./components/Intro";
 import { GridPick } from "./components/GridPick";
 import { AvoidStep } from "./components/AvoidStep";
+import { BlindAB } from "./components/BlindAB";
 import { Result } from "./components/Result";
 import { ELO_BASE, updateElo } from "./lib/elo";
 import { pickSet } from "./lib/pairing";
@@ -10,8 +11,8 @@ import { fitUtilityModel } from "./lib/utility";
 import { buildProfile } from "./lib/profile";
 import type { Comparison, Profile, Reference, Strength } from "./types";
 
-type Stage = "intro" | "grid" | "avoid" | "result";
-const STORAGE_KEY = "taste.session.v4";
+type Stage = "intro" | "grid" | "avoid" | "validate" | "result";
+const STORAGE_KEY = "taste.session.v5";
 const GRID_N = 4;
 const MIN_SCREENS = 10;
 const MAX_SCREENS = 26;
@@ -61,6 +62,7 @@ export default function App() {
   const [screenSizes, setScreenSizes] = useState<number[]>([]);
   const [currentSet, setCurrentSet] = useState<Reference[]>([]);
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [abScore, setAbScore] = useState<{ correct: number; total: number } | null>(null);
   const [saved, setSaved] = useState<Saved | null>(null);
 
   const byId = useMemo(() => new Map(REFERENCES.map((r) => [r.id, r])), []);
@@ -150,6 +152,12 @@ export default function App() {
 
   const onAvoidDone = (avoidIds: string[]) => {
     setProfile(buildProfile(REFERENCES, comparisons, strengths, avoidIds, project));
+    setAbScore(null);
+    setStage("validate");
+  };
+
+  const onValidateDone = (score: { correct: number; total: number }) => {
+    setAbScore(score);
     setStage("result");
   };
 
@@ -163,7 +171,7 @@ export default function App() {
     <div className="app">
       <header className="topbar">
         <span className="wordmark">Taste</span>
-        <span className="badge">v4</span>
+        <span className="badge">v5</span>
         <span className="topbar__tag">aesthetic-profiling picker</span>
       </header>
 
@@ -190,7 +198,10 @@ export default function App() {
           />
         )}
         {stage === "avoid" && <AvoidStep candidates={avoidCandidates} onDone={onAvoidDone} />}
-        {stage === "result" && profile && <Result profile={profile} byId={byId} onRestart={restart} />}
+        {stage === "validate" && profile && <BlindAB profile={profile} onDone={onValidateDone} />}
+        {stage === "result" && profile && (
+          <Result profile={profile} byId={byId} abScore={abScore} onRestart={restart} />
+        )}
       </main>
 
       <footer className="footer">

@@ -1,19 +1,19 @@
 Apply this aesthetic profile to everything you design for "Acme — warm editorial" — layout, color, type, spacing — instead of generic defaults.
 
-Feel: This taste profile favors sharp, square corners. Lean into the spirit of: Sharp · Expressive, Packed · Warm, Warm · Sharp, Light · Packed. Steer away from: Uniform · Dark, Dark · Minimal, Airy · Cool, Packed · Minimal.
+Feel: This taste profile favors a polished, refined finish. Lean into the spirit of: Packed · Minimal, Airy · Maximal, Light · Packed, Sharp · Expressive. Steer away from: Airy · Cool, Airy · Cool, Maximal · Dramatic, Uniform · Dark.
 
-Priority axes: Type contrast→Dramatic, Corners→Sharp, Geometry→Geometric, Saturation→Muted.
+Priority axes: Type voice→Expressive, Tone→Light, Finish→Refined, Layout→Structured, Saturation→Muted, Type contrast→Dramatic.
 
 Tokens (OKLCH, hex in parens):
-- background oklch(0.219 0.015 217.8) (#131c1f)
-- surface oklch(0.269 0.012 217.8) (#20282a)
-- text oklch(0.96 0.007 217.8) (#edf3f5)
-- primary oklch(0.74 0.12 217.8) (#35bddd)
-- accent oklch(0.7 0.114 7.8) (#da7f91)
-- radius 6px; spacing 13px base scale; border 2px
+- background oklch(0.956 0.015 220.2) (#e6f3f7)
+- surface oklch(0.968 0.012 220.2) (#ecf7fa)
+- text oklch(0.21 0.007 220.2) (#15191b)
+- primary oklch(0.56 0.121 220.2) (#0083a5)
+- accent oklch(0.62 0.115 10.2) (#c06776)
+- radius 8px; spacing 13px base scale; border 2px
 - headings "Verdana", "Segoe UI", system-ui, sans-serif; body "Verdana", "Segoe UI", system-ui, sans-serif
-- shadow 0 12px 30px rgba(0,0,0,0.55)
+- shadow 0 11px 28px rgba(15,23,42,0.16)
 
-Emulate the spirit of: Sharp · Expressive, Packed · Warm, Warm · Sharp, Light · Packed.
-Avoid: Uniform · Dark, Dark · Minimal, Airy · Cool, Packed · Minimal.
+Emulate the spirit of: Packed · Minimal, Airy · Maximal, Light · Packed, Sharp · Expressive.
+Avoid: Airy · Cool, Airy · Cool, Maximal · Dramatic, Uniform · Dark.
 When in doubt, stay consistent with the feel above and prefer the priority axes.

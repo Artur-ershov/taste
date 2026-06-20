@@ -1,6 +1,7 @@
-import type { Profile, Reference } from "../types";
+import type { AxisVector, Profile, Reference } from "../types";
 import { AXIS_BY_ID } from "./axes";
 import { buildTokens, type TokenSummary } from "./tokens";
+import { buildPalette, vectorFromScores } from "./render";
 
 function clause(axisValue: number, low: string, high: string): string | null {
   const a = Math.abs(axisValue);
@@ -142,6 +143,7 @@ export function buildBundleJson(profile: Profile, byId: Map<string, Reference>) 
     $generator: profile.meta.generator,
     meta: profile.meta,
     consistency: profile.consistency,
+    validation: profile.validation,
     brief: buildBriefText(profile, byId),
     axes: profile.axes.map((s) => ({
       id: s.id,
@@ -222,4 +224,74 @@ export function buildCssVars(profile: Profile): string {
     `  --shadow: ${style.shadow};`,
   ];
   return `:root {\n${lines.join("\n")}\n}`;
+}
+
+/** A shadcn/ui theme (:root + .dark) mapping the profile onto shadcn's tokens. */
+export function buildShadcnTheme(profile: Profile): string {
+  const vec = vectorFromScores(profile.axes);
+  const { style } = buildTokens(profile.axes);
+  const light = buildPalette({ ...vec, tone: -55 } as AxisVector);
+  const dark = buildPalette({ ...vec, tone: 60 } as AxisVector);
+  const radius = `${Math.round((style.radius / 16) * 1000) / 1000}rem`;
+  const block = (p: ReturnType<typeof buildPalette>) =>
+    [
+      ["--background", p.bg.css],
+      ["--foreground", p.text.css],
+      ["--card", p.surface.css],
+      ["--card-foreground", p.text.css],
+      ["--popover", p.surface.css],
+      ["--popover-foreground", p.text.css],
+      ["--primary", p.primary.css],
+      ["--primary-foreground", p.primaryFg.css],
+      ["--secondary", p.surfaceAlt.css],
+      ["--secondary-foreground", p.text.css],
+      ["--muted", p.surfaceAlt.css],
+      ["--muted-foreground", p.textMuted.css],
+      ["--accent", p.accent.css],
+      ["--accent-foreground", p.primaryFg.css],
+      ["--destructive", "oklch(0.62 0.21 25)"],
+      ["--destructive-foreground", "oklch(0.99 0 0)"],
+      ["--border", p.border.css],
+      ["--input", p.border.css],
+      ["--ring", p.primary.css],
+    ]
+      .map(([k, v]) => `    ${k}: ${v};`)
+      .join("\n");
+  return `/* shadcn/ui theme — generated from your taste profile (OKLCH) */
+:root {
+    --radius: ${radius};
+${block(light)}
+}
+
+.dark {
+${block(dark)}
+}`;
+}
+
+/** A Tailwind theme.extend config derived from the profile (hex for v3 compat). */
+export function buildTailwindTheme(profile: Profile): string {
+  const { style } = buildTokens(profile.axes);
+  const p = style.palette;
+  const sp = Math.max(4, style.gap);
+  const fam = (f: string) => JSON.stringify(f.split(",").map((s) => s.trim().replace(/^"|"$/g, "")));
+  return `// tailwind.config.js — theme.extend (generated from your taste profile)
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        background: "${p.bg.hex}",
+        surface: "${p.surface.hex}",
+        foreground: "${p.text.hex}",
+        muted: "${p.textMuted.hex}",
+        border: "${p.border.hex}",
+        primary: { DEFAULT: "${p.primary.hex}", foreground: "${p.primaryFg.hex}" },
+        accent: "${p.accent.hex}",
+      },
+      borderRadius: { sm: "${Math.round(style.radius * 0.5)}px", DEFAULT: "${style.radius}px", lg: "${Math.round(style.radius * 1.6)}px" },
+      fontFamily: { heading: ${fam(style.headingFont)}, body: ${fam(style.bodyFont)} },
+      boxShadow: { sm: "${style.shadowSm}", DEFAULT: "${style.shadow}" },
+      spacing: { xs: "${Math.round(sp * 0.5)}px", sm: "${sp}px", md: "${Math.round(sp * 1.8)}px", lg: "${Math.round(sp * 3)}px" },
+    },
+  },
+};`;
 }

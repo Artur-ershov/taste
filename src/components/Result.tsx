@@ -1,13 +1,22 @@
 import { useMemo, useState } from "react";
 import type { Profile, Reference } from "../types";
 import { AXIS_BY_ID } from "../lib/axes";
-import { buildBriefText, buildBundleJson, buildSkillMd, buildClaudePrompt, buildCssVars } from "../lib/brief";
+import {
+  buildBriefText,
+  buildBundleJson,
+  buildSkillMd,
+  buildClaudePrompt,
+  buildCssVars,
+  buildTailwindTheme,
+  buildShadcnTheme,
+} from "../lib/brief";
 import { buildTokens } from "../lib/tokens";
 import { vectorFromScores } from "../lib/render";
 import { StimulusCard } from "./StimulusCard";
+import { PreviewGallery } from "./PreviewGallery";
 import { Radar } from "./Radar";
 
-type Tab = "brief" | "axes" | "tokens" | "skill" | "claude" | "css";
+type Tab = "brief" | "claude" | "skill" | "tokens" | "tailwind" | "shadcn" | "css" | "axes";
 
 function download(filename: string, text: string, type: string) {
   const blob = new Blob([text], { type });
@@ -33,13 +42,17 @@ function MiniRef({ r }: { r: Reference }) {
   );
 }
 
+const verdict = (x: number) => (x >= 0.7 ? "good" : x >= 0.58 ? "mid" : "weak");
+
 export function Result({
   profile,
   byId,
+  abScore,
   onRestart,
 }: {
   profile: Profile;
   byId: Map<string, Reference>;
+  abScore: { correct: number; total: number } | null;
   onRestart: () => void;
 }) {
   const [tab, setTab] = useState<Tab>("brief");
@@ -55,16 +68,20 @@ export function Result({
       skill: buildSkillMd(profile, byId),
       claude: buildClaudePrompt(profile, byId),
       css: buildCssVars(profile),
+      tailwind: buildTailwindTheme(profile),
+      shadcn: buildShadcnTheme(profile),
     };
   }, [profile, byId]);
 
   const tabContent: Record<Tab, string> = {
     brief: artifacts.brief,
-    axes: artifacts.axesJson,
-    tokens: artifacts.tokensJson,
-    skill: artifacts.skill,
     claude: artifacts.claude,
+    skill: artifacts.skill,
+    tokens: artifacts.tokensJson,
+    tailwind: artifacts.tailwind,
+    shadcn: artifacts.shadcn,
     css: artifacts.css,
+    axes: artifacts.axesJson,
   };
 
   const copy = async () => {
@@ -75,6 +92,12 @@ export function Result({
 
   const profileVector = vectorFromScores(profile.axes);
   const topDrivers = profile.drivers.filter((d) => d.importance >= 0.15).slice(0, 7);
+
+  const [dark, setDark] = useState(profileVector.tone > 0);
+  const previewAxes = { ...profileVector, tone: dark ? 55 : -55 };
+
+  const v = profile.validation;
+  const abRatio = abScore && abScore.total ? abScore.correct / abScore.total : null;
 
   return (
     <section className="result">
@@ -92,15 +115,68 @@ export function Result({
         </button>
       </header>
 
-      <div className="result__cols">
-        <div className="panel panel--synth">
-          <h3>Your synthesized style</h3>
-          <p className="panel__hint">A live mockup rendered from your axis scores.</p>
-          <div className="synth__card">
-            <StimulusCard axes={profileVector} />
+      {/* validation */}
+      <div className="panel">
+        <h3>Does this profile actually capture your taste?</h3>
+        <div className="validation">
+          <div className="vstat">
+            <span className="vstat__label">Held-out accuracy</span>
+            {v ? (
+              <>
+                <span className={`vstat__num vstat__num--${verdict(v.heldOut)}`}>{Math.round(v.heldOut * 100)}%</span>
+                <span className="vstat__hint">
+                  predicts {v.n} unseen choices · 50% = chance{v.train - v.heldOut > 0.12 ? " · some overfit" : ""}
+                </span>
+              </>
+            ) : (
+              <span className="vstat__hint">too few judgments to cross-validate</span>
+            )}
+          </div>
+          <div className="vstat">
+            <span className="vstat__label">Blind A/B — “more you”</span>
+            {abRatio !== null ? (
+              <>
+                <span className={`vstat__num vstat__num--${verdict(abRatio)}`}>
+                  {abScore!.correct}/{abScore!.total}
+                </span>
+                <span className="vstat__hint">
+                  you picked your profiled design over a foil that breaks your key axes
+                </span>
+              </>
+            ) : (
+              <span className="vstat__hint">skipped</span>
+            )}
           </div>
         </div>
+      </div>
 
+      {/* preview */}
+      <div className="panel">
+        <div className="preview__head">
+          <div>
+            <h3>Your taste, applied</h3>
+            <p className="panel__hint">A page and real components rendered from your tokens.</p>
+          </div>
+          <div className="toggle" role="group" aria-label="Theme">
+            <button className={`toggle__btn${!dark ? " toggle__btn--on" : ""}`} onClick={() => setDark(false)}>
+              Light
+            </button>
+            <button className={`toggle__btn${dark ? " toggle__btn--on" : ""}`} onClick={() => setDark(true)}>
+              Dark
+            </button>
+          </div>
+        </div>
+        <div className="preview">
+          <div className="preview__page">
+            <StimulusCard axes={previewAxes} />
+          </div>
+          <div className="preview__kit">
+            <PreviewGallery axes={previewAxes} />
+          </div>
+        </div>
+      </div>
+
+      <div className="result__cols">
         <div className="panel">
           <h3>Axis profile</h3>
           <div className="axes">
@@ -125,32 +201,30 @@ export function Result({
             })}
           </div>
         </div>
-      </div>
 
-      <div className="panel">
-        <h3>What drives your taste</h3>
-        <p className="panel__hint">
-          Per-axis weights from a conjoint logit model — how much each axis actually decided your picks.
-        </p>
-        <div className="drivers">
-          <div className="drivers__radar">
-            <Radar drivers={profile.drivers} />
-          </div>
-          <div className="drivers__list">
-            {topDrivers.map((d) => {
-              const def = AXIS_BY_ID[d.id];
-              const pole = d.weight > 0 ? def.highPole : def.lowPole;
-              return (
-                <div className="driver" key={d.id}>
-                  <span className="driver__name">
-                    {def.label} → <strong>{pole}</strong>
-                  </span>
-                  <div className="driver__track">
-                    <div className="driver__fill" style={{ width: `${Math.round(d.importance * 100)}%` }} />
+        <div className="panel">
+          <h3>What drives your taste</h3>
+          <p className="panel__hint">Conjoint part-worths — how much each axis decided your picks.</p>
+          <div className="drivers">
+            <div className="drivers__radar">
+              <Radar drivers={profile.drivers} />
+            </div>
+            <div className="drivers__list">
+              {topDrivers.map((d) => {
+                const def = AXIS_BY_ID[d.id];
+                const pole = d.weight > 0 ? def.highPole : def.lowPole;
+                return (
+                  <div className="driver" key={d.id}>
+                    <span className="driver__name">
+                      {def.label} → <strong>{pole}</strong>
+                    </span>
+                    <div className="driver__track">
+                      <div className="driver__fill" style={{ width: `${Math.round(d.importance * 100)}%` }} />
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
@@ -186,6 +260,8 @@ export function Result({
                 ["claude", "Claude prompt"],
                 ["skill", "SKILL.md"],
                 ["tokens", "Tokens"],
+                ["tailwind", "Tailwind"],
+                ["shadcn", "shadcn"],
                 ["css", "CSS"],
                 ["axes", "Axes"],
               ] as [Tab, string][]
@@ -212,8 +288,11 @@ export function Result({
           <button className="btn btn--ghost" onClick={() => download("SKILL.md", artifacts.skill, "text/markdown")}>
             ↓ SKILL.md
           </button>
-          <button className="btn btn--ghost" onClick={() => download("taste.css", artifacts.css, "text/css")}>
-            ↓ taste.css
+          <button className="btn btn--ghost" onClick={() => download("tailwind.config.js", artifacts.tailwind, "text/javascript")}>
+            ↓ tailwind.config.js
+          </button>
+          <button className="btn btn--ghost" onClick={() => download("theme.css", artifacts.shadcn, "text/css")}>
+            ↓ shadcn theme.css
           </button>
         </div>
       </div>

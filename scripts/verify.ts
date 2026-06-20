@@ -6,6 +6,7 @@ import { ELO_BASE, updateElo } from "../src/lib/elo";
 import { pickSet } from "../src/lib/pairing";
 import { fitUtilityModel } from "../src/lib/utility";
 import { buildProfile } from "../src/lib/profile";
+import { heldOutAccuracy } from "../src/lib/validate";
 import { AXIS_IDS } from "../src/lib/axes";
 import { buildPalette } from "../src/lib/render";
 import type { AxisVector, Comparison, Strength } from "../src/types";
@@ -99,21 +100,38 @@ function runSim(noiseSd: number) {
     const t = TARGET[d.id];
     if (Math.abs(t) >= 18) { dChk++; if (Math.sign(d.weight) === Math.sign(t)) dHit++; }
   }
-  return { screens, comps: comps.length, agree, dHit, dChk, consistency: profile.consistency };
+  return { screens, comps, agree, dHit, dChk, consistency: profile.consistency };
+}
+
+// A random picker should validate near chance — proof the held-out metric
+// discriminates real taste from noise.
+function runRandom() {
+  const comps: Comparison[] = [];
+  let lastIds: string[] = [];
+  for (let s = 0; s < 14; s++) {
+    const set = pickSet(REFERENCES, replay(comps), GRID_N, lastIds);
+    const order = [...set].sort(() => Math.random() - 0.5);
+    const best = order[0].id, worst = order[order.length - 1].id;
+    for (const r of set) if (r.id !== best) comps.push({ winner: best, loser: r.id, ts: s });
+    for (const r of set) if (r.id !== best && r.id !== worst) comps.push({ winner: r.id, loser: worst, ts: s });
+    lastIds = set.map((r) => r.id);
+  }
+  return heldOutAccuracy(REFERENCES, comps)?.heldOut ?? 0;
 }
 
 // Average over a few seeds per user type (decisive vs noisy) to show adaptivity.
 function summarize(label: string, noiseSd: number, runs = 6) {
   const rs = Array.from({ length: runs }, () => runSim(noiseSd));
   const avg = (f: (r: ReturnType<typeof runSim>) => number) => rs.reduce((s, r) => s + f(r), 0) / runs;
-  const minAgree = Math.min(...rs.map((r) => r.agree));
+  const avgAgree = avg((r) => r.agree);
   const minDriver = Math.min(...rs.map((r) => r.dHit - (r.dChk - 1)));
+  const heldOut = avg((r) => heldOutAccuracy(REFERENCES, r.comps)?.heldOut ?? 0);
   console.log(
     `${label.padEnd(20)} screens≈${avg((r) => r.screens).toFixed(1)} ` +
-      `axes≈${avg((r) => r.agree).toFixed(1)}/12 (min ${minAgree}) ` +
-      `drivers ok=${minDriver >= 0} consistency≈${avg((r) => r.consistency).toFixed(2)}`,
+      `axes≈${avgAgree.toFixed(1)}/12 (min ${Math.min(...rs.map((r) => r.agree))}) ` +
+      `held-out≈${(heldOut * 100).toFixed(0)}% consistency≈${avg((r) => r.consistency).toFixed(2)}`,
   );
-  return { avgScreens: avg((r) => r.screens), minAgree, minDriver };
+  return { avgScreens: avg((r) => r.screens), avgAgree, minDriver, heldOut };
 }
 
 // The confidence meter tracks information collected (estimate precision), not
@@ -122,7 +140,12 @@ console.log("=== Stopping (meter = information collected; settles in ~MIN screen
 const decisive = summarize("decisive (sd 35)", 35);
 const noisy = summarize("noisy (sd 80)", 80);
 
-if (decisive.minAgree < 9) { console.error("FAIL: weak axis recovery (decisive)"); process.exit(1); }
+const randomHeldOut = Array.from({ length: 12 }, () => runRandom()).reduce((s, x) => s + x, 0) / 12;
+console.log(`random picker held-out≈${(randomHeldOut * 100).toFixed(0)}% (should be ≈ chance)`);
+
+if (decisive.avgAgree < 9.3) { console.error("FAIL: weak axis recovery (decisive)"); process.exit(1); }
 if (decisive.minDriver < 0) { console.error("FAIL: drivers don't match planted preference"); process.exit(1); }
 if (decisive.avgScreens >= MAX || noisy.avgScreens >= MAX) { console.error("FAIL: profile never settled (ran to max)"); process.exit(1); }
+if (decisive.heldOut < 0.65) { console.error("FAIL: real taste should cross-validate well above chance"); process.exit(1); }
+if (decisive.heldOut - randomHeldOut < 0.08) { console.error("FAIL: held-out metric doesn't separate noise from taste"); process.exit(1); }
 console.log("\nPASS");

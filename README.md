@@ -17,13 +17,31 @@ intro ─▶ judge designs ─▶ flag styles to avoid ─▶ profile + export
 
 ## Live
 
-- **v4** (current): https://artur-ershov.github.io/taste/v4/
+- **v5** (current): https://artur-ershov.github.io/taste/v5/
+- **v4**: https://artur-ershov.github.io/taste/v4/
 - **v3**: https://artur-ershov.github.io/taste/v3/
 - **v2**: https://artur-ershov.github.io/taste/v2/
 - **v1**: https://artur-ershov.github.io/taste/
 
-All are published from this repo by one Actions workflow — v1–v3 from frozen
-snapshots in `frozen/`, v4 from the current build.
+All are published from this repo by one Actions workflow — v1–v4 from frozen
+snapshots in `frozen/`, v5 from the current build.
+
+## What's new in v5 — does it actually work?
+
+Earlier versions assumed the profile was right. v5 makes it falsifiable, and
+makes the output tangible:
+
+- **Held-out accuracy** (`lib/validate.ts`) — k-fold cross-validation that holds
+  out whole screens, fits on the rest and predicts the unseen choices. ~50% =
+  chance (no learnable taste); ~75–85% = it generalizes (cf. CMU's 79.4%).
+  `verify` proves the metric separates signal from noise: a decisive simulated
+  taste scores ~72%, a random picker ~50%.
+- **Blind A/B** — at the end you pick, unlabeled, between your profiled design and
+  a foil that breaks your top axes; reliably choosing yours validates the whole
+  pipeline (axes → tokens → felt design), the threshold the research flags.
+- **Tangible output** — a live component preview (buttons, inputs, cards) with a
+  light/dark toggle, plus **Tailwind config** and **shadcn/ui theme** exports
+  alongside the brief / tokens / SKILL.md / Claude prompt.
 
 ## What's new in v4 — representative stimuli
 

@@ -97,6 +97,8 @@ export interface Profile {
   drivers: AxisDriver[];
   /** Fraction of picks that agreed with the final ranking (0.5 = noise, 1 = perfectly transitive). */
   consistency: number;
+  /** Held-out cross-validation of the model (null if too few judgments). */
+  validation: import("./lib/validate").Validation | null;
   /** Top-ranked references to emulate (ids). */
   emulate: string[];
   /** Bottom-ranked + explicitly rejected references to avoid (ids). */

@@ -40,12 +40,21 @@ function Bar({ w, color, h = 6, radius = 3, op = 0.5 }: { w: string; color: stri
   return <div style={{ width: w, height: h, background: color, borderRadius: Math.min(radius, h / 2), opacity: op }} />;
 }
 
-export function StimulusCard({ reference, axes }: { reference?: Reference; axes?: AxisVector }) {
+export function StimulusCard({
+  reference,
+  axes,
+  variant = 0,
+}: {
+  reference?: Reference;
+  axes?: AxisVector;
+  /** Varies surface content (headline, nav…) without changing the style. */
+  variant?: number;
+}) {
   const vec = (reference?.axes ?? axes)!;
   const id = reference?.id ?? "profile";
   const s = deriveStyle(vec);
   const p = s.palette;
-  const seed = hash(id);
+  const seed = hash(`${id}:${variant}`);
   const pick = <T,>(arr: T[], off = 0) => arr[(seed + off) % arr.length];
 
   const centered = s.asymmetry < 0.45;
