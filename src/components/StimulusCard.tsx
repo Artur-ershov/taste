@@ -95,6 +95,7 @@ export function StimulusCard({
 
   const page: CSSProperties = {
     flex: 1,
+    minHeight: 0, // let the page clip instead of overriding the frame's aspect-ratio
     overflow: "hidden",
     background: p.bg.css,
     padding: s.pad,

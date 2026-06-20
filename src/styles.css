@@ -759,6 +759,16 @@ code {
 }
 
 /* ---------- responsive ---------- */
+@media (min-width: 1200px) {
+  /* wide monitors: all four references in one row, breaking out of the column */
+  .grid2 {
+    grid-template-columns: repeat(4, 1fr);
+    width: min(1480px, 94vw);
+    max-width: none;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+}
 @media (max-width: 760px) {
   .compare__grid,
   .grid2 {
