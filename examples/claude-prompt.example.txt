@@ -1,19 +1,19 @@
 Apply this aesthetic profile to everything you design for "Acme — warm editorial" — layout, color, type, spacing — instead of generic defaults.
 
-Feel: This taste profile favors clearly high typographic contrast with large display type, expressive, characterful display/serif type, a polished, refined finish, a light, bright canvas and a strict, aligned grid. Lean into the spirit of: Editorial Serif, Editorial Serif · Dark, Editorial Serif · Bold, Bauhaus Primary. Steer away from: Vivid Maximal · Cool, Dark Techno, Vivid Maximal · Dark, Soft Minimal · Dark.
+Feel: This taste profile favors sharp, square corners. Lean into the spirit of: Sharp · Expressive, Packed · Warm, Warm · Sharp, Light · Packed. Steer away from: Uniform · Dark, Dark · Minimal, Airy · Cool, Packed · Minimal.
 
-Priority axes: Type voice→Expressive, Tone→Light, Depth→Flat, Saturation→Muted, Layout→Structured, Temperature→Warm.
+Priority axes: Type contrast→Dramatic, Corners→Sharp, Geometry→Geometric, Saturation→Muted.
 
 Tokens (OKLCH, hex in parens):
-- background oklch(0.96 0.014 54.7) (#faf0e9)
-- surface oklch(0.972 0.011 54.7) (#fcf4ef)
-- text oklch(0.21 0.007 54.7) (#1b1815)
-- primary oklch(0.56 0.113 54.7) (#a6602b)
-- accent oklch(0.62 0.107 204.7) (#0098a4)
-- radius 8px; spacing 13px base scale; border 2px
-- headings Georgia, "Times New Roman", "Playfair Display", serif; body "Inter", "Helvetica Neue", system-ui, sans-serif
-- shadow 0 11px 28px rgba(15,23,42,0.16)
+- background oklch(0.219 0.015 217.8) (#131c1f)
+- surface oklch(0.269 0.012 217.8) (#20282a)
+- text oklch(0.96 0.007 217.8) (#edf3f5)
+- primary oklch(0.74 0.12 217.8) (#35bddd)
+- accent oklch(0.7 0.114 7.8) (#da7f91)
+- radius 6px; spacing 13px base scale; border 2px
+- headings "Verdana", "Segoe UI", system-ui, sans-serif; body "Verdana", "Segoe UI", system-ui, sans-serif
+- shadow 0 12px 30px rgba(0,0,0,0.55)
 
-Emulate the spirit of: Editorial Serif, Editorial Serif · Dark, Editorial Serif · Bold, Bauhaus Primary.
-Avoid: Vivid Maximal · Cool, Dark Techno, Vivid Maximal · Dark, Soft Minimal · Dark.
+Emulate the spirit of: Sharp · Expressive, Packed · Warm, Warm · Sharp, Light · Packed.
+Avoid: Uniform · Dark, Dark · Minimal, Airy · Cool, Packed · Minimal.
 When in doubt, stay consistent with the feel above and prefer the priority axes.

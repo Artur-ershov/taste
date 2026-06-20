@@ -128,7 +128,7 @@ export function fitUtilityModel(
     }
     se = Math.sqrt(num / den);
   }
-  const seTarget = 1.15; // calibrated so a typical taste reaches ~0.85 by ~14 screens
+  const seTarget = 0.85; // v4: the decorrelated set reaches tighter SEs, so demand more
   const confidence = Math.min(1, Math.max(0, (se0 - se) / (se0 - seTarget)));
 
   return {

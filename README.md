@@ -17,12 +17,39 @@ intro ─▶ judge designs ─▶ flag styles to avoid ─▶ profile + export
 
 ## Live
 
-- **v3** (current): https://artur-ershov.github.io/taste/v3/
+- **v4** (current): https://artur-ershov.github.io/taste/v4/
+- **v3**: https://artur-ershov.github.io/taste/v3/
 - **v2**: https://artur-ershov.github.io/taste/v2/
 - **v1**: https://artur-ershov.github.io/taste/
 
-All three are published from this repo by one Actions workflow — v1 and v2 from
-frozen snapshots in `frozen/`, v3 from the current build.
+All are published from this repo by one Actions workflow — v1–v3 from frozen
+snapshots in `frozen/`, v4 from the current build.
+
+## What's new in v4 — representative stimuli
+
+A taste tool is only as good as its reference set. v1–v3 hand-authored coherent
+archetypes, but an audit showed they **bundled correlated traits** and **left some
+axes barely varied**, so preferences couldn't be cleanly attributed to a single
+axis (and trend/"niceness" could leak in):
+
+- `cornerSoftness ~ geometry` correlated at **r = 0.91**; `density ~ complexity ~
+  saturation` at ~0.75 — you couldn't tell which axis a preference came from.
+- `typeContrast` had **0** low-contrast examples — that axis was unmeasurable.
+
+v4 regenerates the set deterministically: a few realism anchors + a fill chosen
+to **balance every axis** and **decorrelate the axes**:
+
+- max |axis correlation| **0.91 → 0.32**; every axis balanced (low/mid/high).
+- `typeContrast` low examples **0 → 15**; 44 references total.
+- Execution quality stays controlled by construction (one renderer, one content
+  template, contrast-aware colors — audited: worst body text 15:1, button 4.2:1),
+  so no reference is preferred just because it's "better made".
+- These properties are now a **tested invariant** (`npm run verify` fails if the
+  set regresses past the thresholds).
+
+Still open (needs real multi-user data): subtracting a **population baseline** so
+universal trends (dark/minimal "feels premium") cancel and only *distinctive*
+taste remains. Reported as future work.
 
 ## What's new in v3 — fewer shows
 

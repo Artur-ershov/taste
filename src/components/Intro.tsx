@@ -34,8 +34,8 @@ export function Intro({ onStart, saved, onResume }: Props) {
           comparisons each.
         </li>
         <li>
-          <strong>Adaptive</strong> — the set adapts and we stop as soon as the conjoint weights are
-          settled (usually ~12–16 screens).
+          <strong>Balanced set</strong> — references are balanced and decorrelated across axes, so a
+          preference maps to the axis that caused it; we stop once the profile settles (~10 screens).
         </li>
         <li>
           <strong>Export</strong> — axis scores, DTCG tokens, a SKILL.md and a paste-ready Claude
