@@ -270,7 +270,7 @@ export function StimulusCard({
             {media}
           </div>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "1.05fr 0.95fr", gap: s.gap, alignItems: "center" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 0.95fr)", gap: s.gap, alignItems: "center" }}>
             {heroText}
             {media}
           </div>
@@ -287,7 +287,7 @@ export function StimulusCard({
 
         {/* features */}
         {showFeatures && (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: s.gap * 0.7 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: s.gap * 0.7 }}>
             {Array.from({ length: 3 }).map((_, i) => (
               <div
                 key={i}
@@ -300,10 +300,11 @@ export function StimulusCard({
                   display: "flex",
                   flexDirection: "column",
                   gap: 5,
+                  minWidth: 0,
                 }}
               >
                 <div style={{ width: s.bodySize + 2, height: s.bodySize + 2, borderRadius: s.blobness > 0.6 ? "50%" : s.radius * 0.5, background: accentColors[i % accentColors.length].css }} />
-                <span style={{ fontSize: s.bodySize - 3, fontWeight: Math.max(600, s.weightBody) }}>{pick(FEATURES, i * 7)}</span>
+                <span style={{ fontSize: s.bodySize - 3, fontWeight: Math.max(600, s.weightBody), whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{pick(FEATURES, i * 7)}</span>
                 <Bar w="90%" color={p.textMuted.css} h={4} op={0.45} />
                 <Bar w="70%" color={p.textMuted.css} h={4} op={0.45} />
               </div>

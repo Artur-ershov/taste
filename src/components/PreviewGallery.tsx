@@ -108,7 +108,7 @@ export function PreviewGallery({ axes }: { axes: AxisVector }) {
         }}
       />
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: s.gap }}>
+      <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", gap: s.gap }}>
         {/* both cards: a header row with the title at the top, so they line up */}
         <div style={surface}>
           <div style={cardHead}>
