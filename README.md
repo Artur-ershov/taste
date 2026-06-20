@@ -17,14 +17,31 @@ intro ─▶ judge designs ─▶ flag styles to avoid ─▶ profile + export
 
 ## Live
 
-- **v5** (current): https://artur-ershov.github.io/taste/v5/
+- **v6** (current): https://artur-ershov.github.io/taste/v6/
+- **v5**: https://artur-ershov.github.io/taste/v5/
 - **v4**: https://artur-ershov.github.io/taste/v4/
 - **v3**: https://artur-ershov.github.io/taste/v3/
 - **v2**: https://artur-ershov.github.io/taste/v2/
 - **v1**: https://artur-ershov.github.io/taste/
 
-All are published from this repo by one Actions workflow — v1–v4 from frozen
-snapshots in `frozen/`, v5 from the current build.
+All are published from this repo by one Actions workflow — v1–v5 from frozen
+snapshots in `frozen/`, v6 from the current build.
+
+## What's new in v6 — wider axes, richer stimuli
+
+The set felt thin, so v6 widens what it can measure and how varied the stimuli
+look (no real photography yet — still rendered):
+
+- **16 axes** (was 12) — added **Palette** (mono ↔ multicolor), **Fills**
+  (flat ↔ gradient), **Type weight** (light ↔ heavy) and **Casing**
+  (sentence ↔ uppercase). The generator re-balances and re-decorrelates over all
+  16 (max |r| **0.30**, every axis covered — still a tested invariant).
+- **Richer rendering** — multi-hue palettes, gradient fills, light/heavy weights,
+  uppercase treatments, and **13 web fonts** (Inter, Space Grotesk, Fraunces,
+  Playfair, Spectral, JetBrains Mono…) chosen by type voice + weight, so the
+  references no longer all look like one font.
+- **`accent-2` / `accent-3`** tokens for multicolor profiles.
+- Fixed a card-heading misalignment in the component preview.
 
 ## What's new in v5 — does it actually work?
 

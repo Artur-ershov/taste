@@ -12,7 +12,7 @@ import { buildProfile } from "./lib/profile";
 import type { Comparison, Profile, Reference, Strength } from "./types";
 
 type Stage = "intro" | "grid" | "avoid" | "validate" | "result";
-const STORAGE_KEY = "taste.session.v5";
+const STORAGE_KEY = "taste.session.v6";
 const GRID_N = 4;
 const MIN_SCREENS = 10;
 const MAX_SCREENS = 26;
@@ -171,7 +171,7 @@ export default function App() {
     <div className="app">
       <header className="topbar">
         <span className="wordmark">Taste</span>
-        <span className="badge">v5</span>
+        <span className="badge">v6</span>
         <span className="topbar__tag">aesthetic-profiling picker</span>
       </header>
 
@@ -206,7 +206,7 @@ export default function App() {
 
       <footer className="footer">
         <span>
-          Best–worst grids + conjoint logit · balanced &amp; decorrelated {REFERENCES.length}-reference set · runs in your browser
+          Best–worst grids + conjoint logit · {REFERENCES.length} balanced &amp; decorrelated references across 16 axes · in your browser
         </span>
       </footer>
     </div>

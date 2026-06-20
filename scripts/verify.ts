@@ -53,7 +53,8 @@ import type { AxisVector, Comparison, Strength } from "../src/types";
 // Planted taste: airy, minimal, muted, cool, rounded, refined (≈ "Soft Minimal").
 const TARGET: Record<string, number> = {
   tone: -60, density: -55, complexity: -65, saturation: -40, temperature: -15,
-  cornerSoftness: 55, depth: 15, typeContrast: -10, typePersonality: -30,
+  paletteRichness: -60, gradients: -40, cornerSoftness: 55, depth: 15,
+  typeContrast: -10, typePersonality: -30, fontWeight: -30, letterCase: -50,
   geometry: 20, gridStrictness: -40, brutalism: -70,
 };
 const score = (id: string) => {
@@ -128,7 +129,7 @@ function summarize(label: string, noiseSd: number, runs = 6) {
   const heldOut = avg((r) => heldOutAccuracy(REFERENCES, r.comps)?.heldOut ?? 0);
   console.log(
     `${label.padEnd(20)} screens≈${avg((r) => r.screens).toFixed(1)} ` +
-      `axes≈${avgAgree.toFixed(1)}/12 (min ${Math.min(...rs.map((r) => r.agree))}) ` +
+      `axes≈${avgAgree.toFixed(1)}/${AXIS_IDS.length} (min ${Math.min(...rs.map((r) => r.agree))}) ` +
       `held-out≈${(heldOut * 100).toFixed(0)}% consistency≈${avg((r) => r.consistency).toFixed(2)}`,
   );
   return { avgScreens: avg((r) => r.screens), avgAgree, minDriver, heldOut };
@@ -143,7 +144,7 @@ const noisy = summarize("noisy (sd 80)", 80);
 const randomHeldOut = Array.from({ length: 12 }, () => runRandom()).reduce((s, x) => s + x, 0) / 12;
 console.log(`random picker held-out≈${(randomHeldOut * 100).toFixed(0)}% (should be ≈ chance)`);
 
-if (decisive.avgAgree < 9.3) { console.error("FAIL: weak axis recovery (decisive)"); process.exit(1); }
+if (decisive.avgAgree < AXIS_IDS.length * 0.78) { console.error("FAIL: weak axis recovery (decisive)"); process.exit(1); }
 if (decisive.minDriver < 0) { console.error("FAIL: drivers don't match planted preference"); process.exit(1); }
 if (decisive.avgScreens >= MAX || noisy.avgScreens >= MAX) { console.error("FAIL: profile never settled (ran to max)"); process.exit(1); }
 if (decisive.heldOut < 0.65) { console.error("FAIL: real taste should cross-validate well above chance"); process.exit(1); }

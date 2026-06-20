@@ -62,6 +62,10 @@ export function StimulusCard({
   const showFeatures = s.richness >= 0.48;
   const domain = `${id.replace(/-.*/, "")}.com`;
   const mediaRadius = s.blobness > 0.6 ? Math.max(s.radius, 14) : s.radius;
+  const grad = s.gradientStrength > 0.45;
+  const lastAccent = p.accents[p.accents.length - 1];
+  const primaryBg = grad ? `linear-gradient(135deg, ${p.primary.css}, ${lastAccent.css})` : p.primary.css;
+  const accentColors = [p.primary, ...p.accents]; // for cycling multicolor chips
 
   const frame: CSSProperties = {
     width: "100%",
@@ -94,15 +98,16 @@ export function StimulusCard({
     overflow: "hidden",
     background: p.bg.css,
     padding: s.pad,
+    fontWeight: s.weightBody,
     display: "flex",
     flexDirection: "column",
     gap: s.gap * 1.1,
   };
 
   const button: CSSProperties = {
-    background: p.primary.css,
+    background: primaryBg,
     color: p.primaryFg.css,
-    fontWeight: 600,
+    fontWeight: Math.max(600, s.weightBody),
     fontSize: s.bodySize - 2,
     padding: `${Math.round(s.pad * 0.3)}px ${Math.round(s.pad * 0.62)}px`,
     borderRadius: s.radius,
@@ -124,6 +129,7 @@ export function StimulusCard({
     fontSize: s.headingSize,
     lineHeight: 1.05,
     letterSpacing: `${s.letterSpacing}em`,
+    textTransform: s.uppercaseHead ? "uppercase" : "none",
   };
 
   // Faux product screenshot — the main "this is a website" signal.
@@ -136,7 +142,7 @@ export function StimulusCard({
         minHeight: centered ? undefined : 96,
         borderRadius: mediaRadius,
         border: `${s.borderWidth}px solid ${p.border.css}`,
-        background: `linear-gradient(135deg, ${p.primary.css} 0%, ${p.accent.css} 100%)`,
+        background: `linear-gradient(135deg, ${p.primary.css} 0%, ${lastAccent.css} 100%)`,
         boxShadow: s.shadow,
         padding: Math.round(s.pad * 0.45),
         overflow: "hidden",
@@ -295,8 +301,8 @@ export function StimulusCard({
                   gap: 5,
                 }}
               >
-                <div style={{ width: s.bodySize + 2, height: s.bodySize + 2, borderRadius: s.blobness > 0.6 ? "50%" : s.radius * 0.5, background: i % 2 ? p.accent.css : p.primary.css }} />
-                <span style={{ fontSize: s.bodySize - 3, fontWeight: 600 }}>{pick(FEATURES, i * 7)}</span>
+                <div style={{ width: s.bodySize + 2, height: s.bodySize + 2, borderRadius: s.blobness > 0.6 ? "50%" : s.radius * 0.5, background: accentColors[i % accentColors.length].css }} />
+                <span style={{ fontSize: s.bodySize - 3, fontWeight: Math.max(600, s.weightBody) }}>{pick(FEATURES, i * 7)}</span>
                 <Bar w="90%" color={p.textMuted.css} h={4} op={0.45} />
                 <Bar w="70%" color={p.textMuted.css} h={4} op={0.45} />
               </div>

@@ -24,19 +24,20 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run build # v5 -> dist/
+      - run: npm run build # v6 -> dist/
       # Publish all versions from one Pages site:
-      #   /taste/      -> frozen v1 snapshot
-      #   /taste/v2..v4/ -> frozen snapshots
-      #   /taste/v5/   -> the current build
+      #   /taste/        -> frozen v1 snapshot
+      #   /taste/v2..v5/ -> frozen snapshots
+      #   /taste/v6/     -> the current build
       - name: Assemble site
         run: |
-          mkdir -p site/v2 site/v3 site/v4 site/v5
+          mkdir -p site/v2 site/v3 site/v4 site/v5 site/v6
           cp -r frozen/v1/. site/
           cp -r frozen/v2/. site/v2/
           cp -r frozen/v3/. site/v3/
           cp -r frozen/v4/. site/v4/
-          cp -r dist/. site/v5/
+          cp -r frozen/v5/. site/v5/
+          cp -r dist/. site/v6/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

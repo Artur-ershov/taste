@@ -63,6 +63,8 @@ export function buildTokens(axes: AxisScore[]): TokenBundle {
       primary: color(p.primary, "Primary action"),
       "primary-foreground": color(p.primaryFg, "Text on primary"),
       accent: color(p.accent, "Accent / highlight"),
+      ...(p.accents.length > 1 ? { "accent-2": color(p.accents[1], "Secondary accent") } : {}),
+      ...(p.accents.length > 2 ? { "accent-3": color(p.accents[2], "Tertiary accent") } : {}),
     },
     spacing: {
       xs: dim(Math.round(sp * 0.5)),

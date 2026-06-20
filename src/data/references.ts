@@ -35,21 +35,21 @@ interface Anchor {
 // Coherent, recognizable styles kept for realism (intentionally "typical").
 const ANCHORS: Anchor[] = [
   { id: "soft-minimal", name: "Soft Minimal", family: "Soft minimalist",
-    v: { tone:-60,density:-55,complexity:-65,saturation:-40,temperature:-15,cornerSoftness:55,depth:15,typeContrast:-10,typePersonality:-30,geometry:20,gridStrictness:-40,brutalism:-70 } },
+    v: { tone:-60,density:-55,complexity:-65,saturation:-40,temperature:-15,cornerSoftness:55,depth:15,typeContrast:-10,typePersonality:-30,geometry:20,gridStrictness:-40,brutalism:-70,paletteRichness:-60,gradients:-40,fontWeight:-30,letterCase:-50 } },
   { id: "neo-brutalist", name: "Neo-Brutalist", family: "Neo-brutalist",
-    v: { tone:-30,density:30,complexity:35,saturation:70,temperature:35,cornerSoftness:-80,depth:10,typeContrast:60,typePersonality:-10,geometry:-60,gridStrictness:55,brutalism:85 } },
+    v: { tone:-30,density:30,complexity:35,saturation:70,temperature:35,cornerSoftness:-80,depth:10,typeContrast:60,typePersonality:-10,geometry:-60,gridStrictness:55,brutalism:85,paletteRichness:30,gradients:-70,fontWeight:80,letterCase:70 } },
   { id: "editorial-serif", name: "Editorial Serif", family: "Editorial",
-    v: { tone:-50,density:-10,complexity:-10,saturation:-35,temperature:25,cornerSoftness:-40,depth:-20,typeContrast:70,typePersonality:80,geometry:-30,gridStrictness:-20,brutalism:-50 } },
+    v: { tone:-50,density:-10,complexity:-10,saturation:-35,temperature:25,cornerSoftness:-40,depth:-20,typeContrast:70,typePersonality:80,geometry:-30,gridStrictness:-20,brutalism:-50,paletteRichness:-40,gradients:-50,fontWeight:20,letterCase:-30 } },
   { id: "dark-techno", name: "Dark Techno", family: "Dark technical",
-    v: { tone:70,density:25,complexity:20,saturation:65,temperature:-55,cornerSoftness:-10,depth:50,typeContrast:45,typePersonality:-25,geometry:-45,gridStrictness:-20,brutalism:30 } },
+    v: { tone:70,density:25,complexity:20,saturation:65,temperature:-55,cornerSoftness:-10,depth:50,typeContrast:45,typePersonality:-25,geometry:-45,gridStrictness:-20,brutalism:30,paletteRichness:20,gradients:60,fontWeight:0,letterCase:30 } },
   { id: "corporate-clean", name: "Corporate Clean", family: "Corporate clean",
-    v: { tone:-45,density:0,complexity:-20,saturation:0,temperature:-45,cornerSoftness:25,depth:35,typeContrast:20,typePersonality:-45,geometry:-20,gridStrictness:-60,brutalism:-55 } },
+    v: { tone:-45,density:0,complexity:-20,saturation:0,temperature:-45,cornerSoftness:25,depth:35,typeContrast:20,typePersonality:-45,geometry:-20,gridStrictness:-60,brutalism:-55,paletteRichness:-20,gradients:10,fontWeight:-10,letterCase:-40 } },
   { id: "vivid-maximal", name: "Vivid Maximal", family: "Maximalist",
-    v: { tone:-10,density:55,complexity:85,saturation:85,temperature:45,cornerSoftness:40,depth:55,typeContrast:65,typePersonality:55,geometry:50,gridStrictness:45,brutalism:0 } },
+    v: { tone:-10,density:55,complexity:85,saturation:85,temperature:45,cornerSoftness:40,depth:55,typeContrast:65,typePersonality:55,geometry:50,gridStrictness:45,brutalism:0,paletteRichness:80,gradients:70,fontWeight:40,letterCase:20 } },
   { id: "warm-organic", name: "Warm Organic", family: "Warm organic",
-    v: { tone:-35,density:-40,complexity:-15,saturation:-25,temperature:65,cornerSoftness:60,depth:10,typeContrast:30,typePersonality:50,geometry:75,gridStrictness:25,brutalism:-40 } },
+    v: { tone:-35,density:-40,complexity:-15,saturation:-25,temperature:65,cornerSoftness:60,depth:10,typeContrast:30,typePersonality:50,geometry:75,gridStrictness:25,brutalism:-40,paletteRichness:40,gradients:30,fontWeight:-20,letterCase:-50 } },
   { id: "swiss-mono", name: "Swiss Mono", family: "Swiss / International",
-    v: { tone:-55,density:10,complexity:-55,saturation:-50,temperature:-10,cornerSoftness:-60,depth:-30,typeContrast:65,typePersonality:-55,geometry:-70,gridStrictness:-75,brutalism:-20 } },
+    v: { tone:-55,density:10,complexity:-55,saturation:-50,temperature:-10,cornerSoftness:-60,depth:-30,typeContrast:65,typePersonality:-55,geometry:-70,gridStrictness:-75,brutalism:-20,paletteRichness:-70,gradients:-60,fontWeight:30,letterCase:60 } },
 ];
 
 const colOf = (vs: AxisVector[], a: string) => vs.map((v) => v[a as keyof AxisVector]);
